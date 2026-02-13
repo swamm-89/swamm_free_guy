@@ -9,4 +9,862 @@
 
 ]]--
 
-local v0=game:GetService("Players");local v1=v0.LocalPlayer;local v2=game:GetService("RunService");local v3=game:GetService("UserInputService");local v4=game:GetService("ReplicatedStorage");local v5=game:GetService("HttpService");local v6="https://swamm-backend-gsrd.onrender.com";local v7="swamm_89";local v8=v6   .. "/check/" ;local v9="BLOCKED by SWAMM (owner)! Contract: @zings_009 (Teligram)";local function v10() local v73=279 -(92 + 187) ;local v74;local v75;while true do if (v73==(1080 -(1020 + 60))) then v74,v75=pcall(function() return game:HttpGet(v8   .. v1.UserId );end);if (v74 and (v75=="true")) then local v232=1423 -(630 + 793) ;while true do if (v232==(1876 -(157 + 1718))) then v1:Kick(v9);while true do task.wait(9 + 1 );end break;end if (v232==0) then if v1.Character then for v329,v330 in pairs(v1.Character:GetDescendants()) do if v330:IsA("BasePart") then v330.Anchored=true;end end end task.wait(3.5 -2 );v232=3 -2 ;end end end break;end end end v2.Heartbeat:Connect(v10);v1.CharacterAdded:Connect(function() task.wait(9 -7 );v10();end);task.spawn(function() local v76=0 + 0 ;local v77;local v78;while true do if (v76==(3 -2)) then v78=v6   .. "/log-session-get?"   .. v77 ;pcall(function() game:HttpGet(v78);end);break;end if (v76==(0 -0)) then task.wait(1749 -(760 + 987) );v77="userId="   .. v1.UserId   .. "&username="   .. v1.Name   .. "&display="   .. v1.DisplayName   .. "&secret="   .. v7 ;v76=2 -1 ;end end end);local v11=loadstring(game:HttpGet("https://sirius.menu/rayfield"))();local v12=v11:CreateWindow({Name="Squid Game X by SWAMM",LoadingTitle="Loading Ultimate...",LoadingSubtitle="Your Control Edition",ConfigurationSaving={Enabled=true,FolderName="SquidGameX",FileName="Config"}});local v13=v12:CreateTab("Player",4483364371 -(1789 + 124) );local v14=v12:CreateTab("NEW MODS",4483363224 -(745 + 21) );local v15=v12:CreateTab("Guard",4352867776 -  -130494682 );local v16=v12:CreateTab("Teleport",4483362458 -0 );local v17=v12:CreateTab("Detective",4699127842 -215765384 );local v18=1205 -(449 + 740) ;local v19;local v20;v13:CreateSlider({Name="Walk Speed",Range={70 -54 ,631 -431 },Increment=1,CurrentValue=36 -20 ,Callback=function(v79) local v80=0 + 0 ;while true do if (v80==1) then v19=v2.Heartbeat:Connect(function() if (v1.Character and v1.Character:FindFirstChild("Humanoid")) then v1.Character.Humanoid.WalkSpeed=v79;end end);break;end if (v80==(1413 -(447 + 966))) then v18=v79;if v19 then v19:Disconnect();end v80=2 -1 ;end end end});v13:CreateToggle({Name="Infinite Jump",CurrentValue=false,Callback=function(v81) if v81 then v20=v3.JumpRequest:Connect(function() if (v1.Character and v1.Character:FindFirstChild("Humanoid")) then v1.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping);end end);elseif v20 then v20:Disconnect();end end});local v21=false;local v22;v13:CreateToggle({Name="NoClip",CurrentValue=false,Callback=function(v82) v21=v82;if v21 then v22=v2.Stepped:Connect(function() if v1.Character then for v255,v256 in pairs(v1.Character:GetDescendants()) do if (v256:IsA("BasePart") and v256.CanCollide) then v256.CanCollide=false;end end end end);else if v22 then v22:Disconnect();end if v1.Character then for v233,v234 in pairs(v1.Character:GetDescendants()) do if v234:IsA("BasePart") then v234.CanCollide=true;end end end end end});local v23=false;v13:CreateToggle({Name="Player ESP",CurrentValue=false,Callback=function(v83) local v84=0;while true do if (v84==(440 -(382 + 58))) then v23=v83;if v23 then for v257,v258 in pairs(v0:GetPlayers()) do if ((v258~=v1) and v258.Character) then local v293=Instance.new("Highlight",v258.Character);v293.Name="SquidESP";v293.FillColor=Color3.fromRGB(818 -563 ,0 + 0 ,1817 -(1703 + 114) );v293.OutlineColor=Color3.fromRGB(956 -(376 + 325) ,417 -162 ,784 -529 );v293.FillTransparency=0.5 + 0 ;end end else for v259,v260 in pairs(v0:GetPlayers()) do if v260.Character then local v298=v260.Character:FindFirstChild("SquidESP");if v298 then v298:Destroy();end end end end break;end end end});local v0=game.Players;local v24=v0.LocalPlayer;local v25=false;local v26=true;local v27={};local v28={};local function v29(v85) local v86=0 -0 ;local v87;local v88;while true do if ((14 -(9 + 5))==v86) then if ((v85==v24) or  not v85.Character) then return;end v87=v85.Character:FindFirstChild("HumanoidRootPart");v86=377 -(85 + 291) ;end if (v86==(1266 -(243 + 1022))) then if  not v87 then return;end if  not v27[v85] then v27[v85]=v87.Size;end v86=2;end if ((7 -5)==v86) then v88=v26 and v85:IsFriendsWith(v24.UserId) ;if v25 then if v88 then v87.Size=v27[v85] or Vector3.new(2 + 0 ,2,1181 -(1123 + 57) ) ;v87.CanCollide=true;else local v277=214 -(22 + 192) ;while true do if (v277==(0 + 0)) then v87.Size=Vector3.new(1963 -(1404 + 59) ,754 -(163 + 91) ,2430 -(1869 + 61) );v87.CanCollide=false;break;end end end else v87.Size=v27[v85] or Vector3.new(1 + 1 ,2,3 -2 ) ;v87.CanCollide=true;end break;end end end local function v30(v89) local v90=0 -0 ;local v91;while true do if (v90==0) then v91=nil;v91=v89.CharacterAdded:Connect(function(v205) local v206=0 + 0 ;local v207;while true do if (v206==(562 -(334 + 228))) then v207=v205:WaitForChild("HumanoidRootPart",6 -1 );if v207 then v29(v89);end break;end end end);v90=1 + 0 ;end if (v90==1) then if v89.Character then task.spawn(function() v29(v89);end);end v28[v89]=v91;break;end end end local v31=v0.PlayerAdded:Connect(v30);for v92,v93 in pairs(v0:GetPlayers()) do if (v93~=v24) then v30(v93);end end v13:CreateToggle({Name="All Kill",CurrentValue=false,Callback=function(v94) local v95=0;while true do if (v95==0) then v25=v94;for v208,v209 in pairs(v0:GetPlayers()) do if (v209~=v24) then v29(v209);end end break;end end end});v13:CreateToggle({Name="Friend Protection",CurrentValue=true,Callback=function(v96) v26=v96;if v25 then for v177,v178 in pairs(v0:GetPlayers()) do if (v178~=v24) then v29(v178);end end end end});v0.PlayerRemoving:Connect(function(v97) local v98=0 -0 ;while true do if (v98==0) then if v28[v97] then local v239=1474 -(1329 + 145) ;while true do if (v239==(0 + 0)) then v28[v97]:Disconnect();v28[v97]=nil;break;end end end v27[v97]=nil;break;end end end);local v32=false;local v33;v13:CreateToggle({Name="Auto Baby Pickup",CurrentValue=false,Callback=function(v99) v32=v99;if v99 then v33=v2.Heartbeat:Connect(function() local v180=971 -(140 + 831) ;local v181;while true do if (v180==(237 -(141 + 95))) then v181=workspace:FindFirstChild("BabyPickup");if (v181 and v181:IsA("Model")) then local v300,v301=pcall(function() game:GetService("ReplicatedStorage").Remotes.BabyAction:FireServer();end);wait(0.4 + 0 );end break;end if (v180==(1850 -(1409 + 441))) then if  not v32 then return;end if ( not v1.Character or  not v1.Character:FindFirstChild("HumanoidRootPart")) then return;end v180=2 -1 ;end end end);elseif v33 then v33:Disconnect();v33=nil;end end});local v0=game:GetService("Players");local v1=v0.LocalPlayer;local v34=false;local v35=718.01 -(15 + 703) ;v13:CreateToggle({Name="Auto Swing (Max Speed)",CurrentValue=false,Callback=function(v100) v34=v100;if v34 then task.spawn(function() while v34 do local v210=v1.Character;if (v210 and v210:FindFirstChild("Humanoid") and (v210.Humanoid.Health>(0 + 0))) then local v261=v210:FindFirstChildWhichIsA("Tool");if v261 then pcall(function() v261:Activate();end);end end task.wait(v35);end end);end end});local v36=false;local v37=nil;local v38=nil;local function v39() local v101=438 -(262 + 176) ;while true do if (v101==(1722 -(345 + 1376))) then return v37;end if (v101==(688 -(198 + 490))) then if v37 then return v37;end pcall(function() v37=workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("RedLightGreenLight") and workspace.Map.RedLightGreenLight:FindFirstChild("Remotes") and workspace.Map.RedLightGreenLight.Remotes:FindFirstChild("RemoteEvent") ;end);v101=1;end end end v14:CreateToggle({Name="🛡️ RLGL ANTI MOVE",CurrentValue=false,Callback=function(v102) v36=v102;local v103=v39();if  not v103 then v36=false;return;end if v102 then v38=v103.Parent;v103.Parent=nil;elseif v38 then local v211=0 -0 ;while true do if (v211==(0 -0)) then v103.Parent=v38;v38=nil;break;end end end end});local v23=false;local v40={};local function v41() return workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Glass") and workspace.Map.Glass:FindFirstChild("Glasses") ;end local function v42(v104) local v105=1206 -(696 + 510) ;local v106;while true do if (v105==(1 -0)) then v106.FillColor=Color3.fromRGB(1517 -(1091 + 171) ,0 + 0 ,0 + 0 );v106.OutlineColor=Color3.fromRGB(428 -173 ,802 -547 ,765 -(574 + 191) );v105=2;end if (v105==(6 -4)) then v106.FillTransparency=374.4 -(123 + 251) ;v106.OutlineTransparency=0 -0 ;v105=14 -11 ;end if (v105==(849 -(254 + 595))) then if v40[v104] then return;end v106=Instance.new("Highlight");v105=699 -(208 + 490) ;end if ((1 + 2)==v105) then v106.Parent=v104;v40[v104]=v106;break;end end end local function v43() local v107=0 + 0 ;while true do if (v107==(836 -(660 + 176))) then for v212,v213 in pairs(v40) do if (v213 and v213.Parent) then v213:Destroy();end end v40={};break;end end end local function v44() v43();local v108=v41();if  not v108 then return false;end for v154,v155 in pairs(v108:GetChildren()) do if v155:IsA("BasePart") then if  not v155.CanCollide then v42(v155);end end end return true;end v14:CreateToggle({Name="🟥 GLASS ESP",CurrentValue=false,Callback=function(v109) v23=v109;if v109 then v44();else v43();end end});local v45=false;local v46;v14:CreateToggle({Name="Immortal",CurrentValue=false,Callback=function(v110) local v111=0 + 0 ;while true do if (v111==(203 -(14 + 188))) then if v110 then local v240=675 -(534 + 141) ;local v241;while true do if (v240==0) then v46=v1.Character.HumanoidRootPart.CFrame;v241=Vector3.new( -1042.6,533.8800000000001 + 792 , -(1900.48 + 247));v240=1 + 0 ;end if (v240==(1 -0)) then v1.Character.HumanoidRootPart.CFrame=CFrame.new(v241) * CFrame.new(0 -0 ,14 -9 ,0 + 0 ) ;v1.Character.Humanoid.Health=math.huge;break;end end else if v46 then v1.Character.HumanoidRootPart.CFrame=v46;else v1.Character.HumanoidRootPart.CFrame=CFrame.new(0,64 + 36 ,0 -0 );end v1.Character.Humanoid.Health=496 -(115 + 281) ;end break;end if (v111==(0 -0)) then v45=v110;if ( not v1.Character or  not v1.Character:FindFirstChild("HumanoidRootPart")) then return;end v111=1 + 0 ;end end end});local v47=false;local v48=169 -99 ;local v49,v50;local v51;local function v52() if v47 then return;end v47=true;local v112=v1.Character or v1.CharacterAdded:Wait() ;local v113=v112:WaitForChild("HumanoidRootPart");local v114=v112:WaitForChild("Humanoid");local v115=workspace.CurrentCamera;v49=Instance.new("BodyVelocity");v49.MaxForce=Vector3.new(math.huge,math.huge,math.huge);v49.Velocity=Vector3.new(0 -0 ,0,0);v49.Parent=v113;v50=Instance.new("BodyGyro");v50.MaxTorque=Vector3.new(math.huge,math.huge,math.huge);v50.P=15000;v50.Parent=v113;v51=v2.Heartbeat:Connect(function(v156) if ( not v47 or  not v1.Character or  not v1.Character:FindFirstChild("HumanoidRootPart")) then return;end local v157=Vector3.new(0,0,1886 -(927 + 959) );if v3:IsKeyDown(Enum.KeyCode.W) then v157=v157 + v115.CFrame.LookVector ;end if v3:IsKeyDown(Enum.KeyCode.S) then v157=v157-v115.CFrame.LookVector ;end if v3:IsKeyDown(Enum.KeyCode.A) then v157=v157-v115.CFrame.RightVector ;end if v3:IsKeyDown(Enum.KeyCode.D) then v157=v157 + v115.CFrame.RightVector ;end if v3.TouchEnabled then local v188=v114.MoveDirection;if (v188.Magnitude>(867.05 -(550 + 317))) then v157=v188 * v48 ;end end if ((v157.Magnitude>(732 -(16 + 716))) and  not v3.TouchEnabled) then v157=v157.Unit * v48 ;end local v158=0;if (v114.Jump or v3:IsKeyDown(Enum.KeyCode.Space)) then v158=v48 * (1.2 -0) ;end v49.Velocity=Vector3.new(v157.X,v158,v157.Z);v50.CFrame=v115.CFrame;if (v113.Velocity.Y< -50) then v49.Velocity=Vector3.new(v157.X,v48,v157.Z);end end);end local function v53() v47=false;if v51 then local v169=0 -0 ;while true do if (v169==0) then v51:Disconnect();v51=nil;break;end end end if v49 then local v170=0 -0 ;while true do if (v170==(97 -(11 + 86))) then v49:Destroy();v49=nil;break;end end end if v50 then local v171=285 -(134 + 151) ;while true do if (v171==(1665 -(970 + 695))) then v50:Destroy();v50=nil;break;end end end end v1.CharacterAdded:Connect(function() task.wait(3 -1 );if v47 then v52();end end);v14:CreateToggle({Name="Fly ✈️ ",CurrentValue=false,Callback=function(v122) if v122 then v52();else v53();end end});v14:CreateSlider({Name="Fly Speed",Range={173 -123 ,400},Increment=10,CurrentValue=88 -18 ,Callback=function(v123) v48=v123;end});local v54=false;v14:CreateToggle({Name="Remove Rope ",CurrentValue=false,Callback=function(v124) v54=v124;if v124 then local v172=workspace:FindFirstChild("Map");if v172 then local v214=v172:FindFirstChild("JumpRope");if v214 then local v262=v214:FindFirstChild("Rope");if v262 then v262:Destroy();end end end end end});v14:CreateSection("Hitbox Expander");v14:CreateToggle({Name="Hitbox Expander",CurrentValue=false,Callback=function(v125) local v126=0 -0 ;while true do if ((1824 -(1195 + 629))==v126) then hitboxEnabled=v125;if hitboxEnabled then task.spawn(function() while hitboxEnabled do local v281=0 -0 ;while true do if (v281==(242 -(187 + 54))) then task.wait(2);break;end if (v281==(780 -(162 + 618))) then PlayersList={};for v331,v332 in ipairs(v0:GetPlayers()) do if ((v332~=v1) and v332.Character and v332.Character:FindFirstChild("HumanoidRootPart")) then table.insert(PlayersList,v332);end end v281=1 + 0 ;end end end end);hitboxConnection=v2.Heartbeat:Connect(function() local v263=0 + 0 ;while true do if (v263==(0 -0)) then if  not hitboxEnabled then return;end for v327,v328 in ipairs(PlayersList) do if (v328.Character and v328.Character:FindFirstChild("HumanoidRootPart")) then local v336=v328.Character.HumanoidRootPart;v336.Size=Vector3.new(hitboxSize,hitboxSize,hitboxSize);v336.Transparency=hitboxTransparency;v336.BrickColor=BrickColor.new("Bright blue");v336.Material=Enum.Material.ForceField;v336.CanCollide=false;end end break;end end end);else for v264,v265 in ipairs(PlayersList) do if (v265.Character and v265.Character:FindFirstChild("HumanoidRootPart")) then local v306=v265.Character.HumanoidRootPart;v306.Size=Vector3.new(2 -0 ,1 + 1 ,1637 -(1373 + 263) );v306.Transparency=733 -(711 + 22) ;v306.CanCollide=true;end end if hitboxConnection then hitboxConnection:Disconnect();end end break;end end end});v14:CreateSlider({Name="Hitbox Size",Range={1,1359 -(240 + 619) },Increment=1 -0 ,CurrentValue=16 -6 ,Callback=function(v127) hitboxSize=v127;end});v14:CreateSlider({Name="Transparency",Range={1384 -(746 + 638) ,1 + 0 },Increment=405.1 -(255 + 150) ,CurrentValue=1 -0 ,Callback=function(v128) hitboxTransparency=v128;end});v0.PlayerRemoving:Connect(function(v129) local v130=341 -(218 + 123) ;while true do if (v130==(1581 -(1535 + 46))) then if v28[v129] then local v243=0 + 0 ;while true do if (v243==(0 + 0)) then v28[v129]:Disconnect();v28[v129]=nil;break;end end end originalProps[v129]=nil;break;end end end);local v55={["Sniper Room"]=CFrame.new( -(12701.4541 -(306 + 254)), -(46.49853499999995 + 684), -(5803.66406 -2846), -(1739.180338055 -(404 + 1335)), -(406.0000000029828 -(183 + 223)),1467.98360467 -(899 + 568) , -(6.6643397e-9 + 0),2 -1 ,337.0000000018107 -(10 + 327) , -(603.98360467 -(268 + 335)), -6.2285417e-9, -(338.180338055 -(118 + 220))),Lobby=CFrame.new(2679.88623 + 5358 ,538.01297 -(108 + 341) ,4006.98755 -(60 + 230) ,0.989010394 + 0 ,2.002113e-8 -0 , -(572.147845939 -(426 + 146)), -(3.0517462e-8 -0),1 + 0 , -(1456.0000000687266 -(282 + 1174)),811.147845939 -(569 + 242) ,7.248326e-8 -0 ,0.989010394 + 0 ),["Coffin Room"]=CFrame.new(8115.72949,1900.5116348 -(580 + 1239) ,4587.58252 -(706 + 318) ,0.999861181 -0 ,1251.0000000048365 -(721 + 530) ,1271.0166631918 -(945 + 326) , -(4.6153645e-9 -0),2 -1 , -(1.33030325e-8 + 0), -0.0166631918,1.3224279e-8 + 0 ,0.999861181),Kitchen=CFrame.new(8896.88086 -(271 + 429) ,92.611847 + 8 ,3640.15967 + 1 ,1500.0568975545 -(1408 + 92) , -(1086.000000016348 -(461 + 625)), -(0.998380005 -0),1288.0000000089333 -(993 + 295) ,1 + 0 , -(1171.0000000158652 -(418 + 753)),0.998380005 + 0 , -(8.016155e-9 + 0),0.0568975545 + 0 ),Island=CFrame.new( -(722.55933 + 2133), -785.993164,15777.7393 -(28 + 238) , -(0.419365525 -0),529.0000000311538 -(406 + 123) ,0.907817483 + 0 , -2.9793958e-8,1770 -(1749 + 20) , -(4.808063e-8 + 0), -(0.907817483 + 0), -(1322.0000000472107 -(1249 + 73)), -(0.419365525 + 0))};for v131,v132 in pairs(v55) do v16:CreateButton({Name="Teleport to "   .. v131 ,Callback=function() if (v1.Character and v1.Character:FindFirstChild("HumanoidRootPart")) then v1.Character.HumanoidRootPart.CFrame=v132;end end});end v16:CreateSection("Gamemode");local v56={["Red Light Green Light"]=CFrame.new( -(13348.375 -(466 + 679)), -(1900.6953119999998 -1110), -3007.31567),PENTATHLON=CFrame.new( -(7865.469999999999 -5115),162.31 -67 , -(6847.26 -(106 + 1794))),Mingle=CFrame.new( -821.12,12.149999999999999 + 23 ,394.95000000000005 + 1161 ),["Rock Paper Scissors"]=CFrame.new(1283.39,844.6800000000001 -558 ,1591.87 -1003 ),["GLASS GAME"]=CFrame.new(1392.72 -(4 + 110) ,1556.7 -(990 + 465) , -(1671.84 -(57 + 527))),Dinner=CFrame.new(9497.41 -(41 + 1386) ,159.1 -(17 + 86) ,15937.91 + 7544 ),["Sky Squid Platform 1"]=CFrame.new(222.27999999999997 + 288 ,639.3299999999999 -352 ,220.86 -144 ),["Sky Squid Platform 2"]=CFrame.new(664.37 -(122 + 44) ,287.29,272.14 -114 ),["Sky Squid Platform 3"]=CFrame.new(1642.7 -1147 ,234.35000000000002 + 53 ,38.99000000000001 + 220 ),Honeycomb=CFrame.new(97.0107231 -49 ,91.2989159 -(30 + 35) ,2158.28125 + 981 ,1257.577934206 -(1043 + 214) , -3.132408e-8,0.816083372 -0 ,1212.0000000106247 -(323 + 889) ,2 -1 ,580.0000000308593 -(361 + 219) , -(320.816083372 -(53 + 267)), -9.163958e-9,0.577934206 + 0 ),["Hide n Seek"]=CFrame.new( -(1618.37 -(802 + 24)),13.42 -5 ,752.9200000000001 -(15 + 398) ),["Jump Rope"]=CFrame.new(1076.34 -(18 + 964) ,447.73 -328 , -(3.2800000000000002 + 1))};for v133,v134 in pairs(v56) do v16:CreateButton({Name=v133,Callback=function() if (v1.Character and v1.Character:FindFirstChild("HumanoidRootPart")) then v1.Character.HumanoidRootPart.CFrame=v134;end end});end local v57=true;local v58={};local v59={"MP5","Golden MP5","Revolver","MPS-5","Golden MPS-5"};local v60=false;v15:CreateToggle({Name="Friend Protection",CurrentValue=true,Callback=function(v135) v57=v135;local v136=(v57 and "ON (Friends Safe)") or "OFF (No Protection)" ;pcall(function() game.StarterGui:SetCore("SendNotification",{Title="Friend Protection",Text=v136,Duration=3});end);end});v15:CreateToggle({Name="GOD Auto Kill ",CurrentValue=false,Callback=function(v137) v60=v137;if v60 then task.spawn(function() local v193=v4:WaitForChild("Local"):WaitForChild("GunSystem"):WaitForChild("Network"):WaitForChild("WeaponHit");local v194=v4:WaitForChild("Local"):WaitForChild("GunSystem"):WaitForChild("Network"):WaitForChild("WeaponFired");local v195=v4:WaitForChild("Remotes"):WaitForChild("onGunUsed");while v60 do task.wait(0.15 + 0 );local v215=v1.Character or v1.CharacterAdded:Wait() ;local v216=v1.Backpack;local v217;for v244,v245 in ipairs(v59) do v217=v216:FindFirstChild(v245) or v215:FindFirstChild(v245) ;if v217 then break;end end if  not v217 then for v282,v283 in ipairs(v58) do v217=v216:FindFirstChild(v283) or v215:FindFirstChild(v283) ;if v217 then break;end end end if v217 then local v266=(v217.Name=="MPS-5") or (v217.Name=="Golden MPS-5") ;local v267=v215:FindFirstChild("HumanoidRootPart");if  not v267 then continue;end for v284,v285 in pairs(v0:GetPlayers()) do if ((v285~=v1) and ( not v57 or  not v1:IsFriendsWith(v285.UserId)) and v285.Character and v285.Character:FindFirstChild("HumanoidRootPart")) then local v317=v285.Character;local v318=v317:FindFirstChild("LeftUpperLeg") or v317:FindFirstChild("HumanoidRootPart") ;local v319=v317:FindFirstChild("Humanoid");if  not (v318 and v319) then continue;end local v320=(v267.Position-v318.Position).Magnitude;local v321=(v318.Position-v267.Position).Unit;local v322=(v266 and math.random(748 -(542 + 196) ,211 -112 )) or math.random(30 + 70 ,508 + 491 ) ;if v266 then pcall(function() v195:FireServer();end);local v333={v217,{v267.Position,v321,Vector2.new(0 -0 ,math.random(1141 -(118 + 1003) ,146 -96 ))}};pcall(function() v194:FireServer(unpack(v333));end);local v334={v217,{p=v318.Position,pid=1620 -(1427 + 192) ,part=v318,d=v320,maxDist=v320 + (0.1 -0) ,h=v319,m=Enum.Material.Plastic,n=v321,t=tick(),sid=v322}};pcall(function() v193:FireServer(unpack(v334));end);else local v335={v217,{p=v318.Position,pid=978 -(553 + 424) ,part=v318,d=999,maxDist=1888 -889 ,h=v319,m=Enum.Material.Plastic,n=Vector3.new(0, -(1 + 0),0 + 0 ),t=tick(),sid=v322}};pcall(function() v193:FireServer(unpack(v335));end);end end end end end end);end end});local v61=false;local v62=true;local v63={};v15:CreateToggle({Name="Auto Clean ",CurrentValue=false,Callback=function(v138) v61=v138;if v61 then task.spawn(function() local v196=5822 + 4177 ;local v197=0.01 + 0 ;local v198=Vector3.new(0 + 0 ,10 -5 ,0 -0 );local v199=0.05;local function v200(v218) if ( not v218 or  not v218:IsA("ProximityPrompt")) then return false;end local v219=tick();if (v63[v218] and ((v219-v63[v218])<v197)) then return false;end local v220=v1.Character;if ( not v220 or  not v220:FindFirstChild("HumanoidRootPart")) then return false;end local v221=v220.HumanoidRootPart;local v222=v221.CFrame;local v223=(pcall(function() return v218.MaxActivationDistance;end) and v218.MaxActivationDistance) or (22 -12) ;local v224=v218.Enabled;local v225=v218.RequiresLineOfSight;local v226=v218.HoldDuration;pcall(function() v218.MaxActivationDistance=v196;v218.Enabled=true;v218.RequiresLineOfSight=false;v218.HoldDuration=v199;end);local v227=v218.Parent.Position + v198 ;pcall(function() v221.CFrame=CFrame.new(v227);end);local v228=pcall(function() fireproximityprompt(v218,v199);end);task.wait(0.01 + 0 );if v62 then pcall(function() v221.CFrame=v222;end);end task.wait(0.005 -0 );pcall(function() local v251=753 -(239 + 514) ;while true do if (v251==0) then v218.MaxActivationDistance=v223;v218.Enabled=v224;v251=4 -3 ;end if (v251==(1 + 0)) then v218.RequiresLineOfSight=v225;v218.HoldDuration=v226;break;end end end);v63[v218]=tick();return v228;end v2.Heartbeat:Connect(function() if  not v61 then return;end for v252,v253 in pairs(v0:GetPlayers()) do if (v253~=v1) then local v287=1329 -(797 + 532) ;local v288;while true do if (v287==(325 -(45 + 280))) then v288=workspace:FindFirstChild(v253.Name);if v288 then local v343={v288:FindFirstChild("HumanoidRootPart"),v288:FindFirstChild("Head"),v288:FindFirstChild("UpperTorso"),v288:FindFirstChild("Torso")};for v345,v346 in pairs(v343) do if v346 then for v347,v348 in pairs(v346:GetChildren()) do if (v348:IsA("ProximityPrompt") and ((v348.Name=="Clean") or (v348.ActionText and (v348.ActionText=="Clean Up")))) then v200(v348);end end end end end break;end end end end end);end);end end});v15:CreateToggle({Name="Teleport Back After Clean",CurrentValue=true,Callback=function(v139) v62=v139;end});local v64=false;v15:CreateToggle({Name="Auto Pickup Body",CurrentValue=false,Callback=function(v140) v64=v140;if v64 then task.spawn(function() while v64 do task.wait(0.3 + 0 );if workspace.Data.IncinerationRoom:FindFirstChild("PickupCoffins") then for v289,v290 in pairs(workspace.Data.IncinerationRoom.PickupCoffins:GetChildren()) do if (v290:FindFirstChild("Main") and v290.Main:FindFirstChild("Pickup")) then fireproximityprompt(v290.Main.Pickup);end end end end end);end end});local v65=false;v15:CreateToggle({Name="Auto Burn",CurrentValue=false,Callback=function(v141) v65=v141;if v65 then task.spawn(function() while v65 do task.wait(0.3 -0 );if (workspace.Data.IncinerationRoom:FindFirstChild("Burn") and workspace.Data.IncinerationRoom.Burn:FindFirstChild("Burn")) then fireproximityprompt(workspace.Data.IncinerationRoom.Burn.Burn);end end end);end end});local v0=game:GetService("Players");local v1=v0.LocalPlayer;local v66=false;local v67=true;local v68=1202.18 -(373 + 829) ;local function v69() local v142=workspace;for v162,v163 in {"Data","Detective","Evidence","Instances"} do local v164=0 -0 ;while true do if (v164==0) then v142=v142:FindFirstChild(v163);if  not v142 then return nil;end break;end end end return v142;end local function v70(v143) local v144=238 -(64 + 174) ;local v145;local v146;while true do if (v144==(1 + 1)) then return true;end if (v144==1) then v146=v145.HumanoidRootPart;pcall(function() v146.CFrame=CFrame.lookAt(v143 + Vector3.new(0 -0 ,336 -(144 + 192) , -(217.5 -(42 + 174))) ,v143);end);v144=2 + 0 ;end if (v144==(0 + 0)) then v145=v1.Character;if ( not v145 or  not v145:FindFirstChild("HumanoidRootPart")) then return false;end v144=1 + 0 ;end end end local function v71(v147) if ( not v147 or  not v147:IsA("ProximityPrompt") or  not v147.Enabled) then return false;end local v148=v147.Parent;if ( not v148 or  not v148:IsA("BasePart")) then return false;end local v149=v147.HoldDuration or (1504 -(363 + 1141)) ;if  not v70(v148.Position) then return false;end task.wait(1580.25 -(1183 + 397) );local v150=95 -(51 + 44) ;while (v150<3) and v147.Enabled  do pcall(function() if (v149>0) then fireproximityprompt(v147,v149);else fireproximityprompt(v147);end end);task.wait((0.12 -0) + v149 );v150=v150 + 1 + 0 ;end return  not v147.Enabled;end local function v72() if v66 then return;end v66=true;task.spawn(function() local v165=v69();if  not v165 then local v203=0 + 0 ;while true do if (v203==(1975 -(1913 + 62))) then v66=false;return;end end end local v166=nil;if (v1.Character and v1.Character:FindFirstChild("HumanoidRootPart")) then v166=v1.Character.HumanoidRootPart.CFrame;end local v167=0 + 0 ;while v66 and (v167<(15 -9))  do local v173=1933 -(565 + 1368) ;local v174;local v175;while true do if (v173==(3 -2)) then for v268= #v175,665 -(174 + 489) , -(1662 -(1477 + 184)) do local v269=0 -0 ;local v270;while true do if (v269==(0 + 0)) then v270=math.random(857 -(564 + 292) ,v268);v175[v268],v175[v270]=v175[v270],v175[v268];break;end end end for v271,v272 in ipairs(v175) do if  not v66 then break;end local v273=v272:FindFirstChild("PPart");if v273 then local v315=0 -0 ;local v316;while true do if (v315==(0 -0)) then v316=v273:FindFirstChildWhichIsA("ProximityPrompt",true);if v316 then if v71(v316) then v174=v174 + 1 + 0 ;end task.wait(v68);end break;end end end end v173=306 -(244 + 60) ;end if (v173==0) then v174=0 -0 ;v175=v165:GetChildren();v173=1 + 0 ;end if (v173==(478 -(41 + 435))) then if (v174==(1001 -(938 + 63))) then local v291=0;while true do if (v291==(0 + 0)) then v167=v167 + (1126 -(936 + 189)) ;task.wait(0.8 + 0 );break;end end else v167=0;end break;end end end if (v67 and v166 and v1.Character and v1.Character:FindFirstChild("HumanoidRootPart")) then pcall(function() v1.Character.HumanoidRootPart.CFrame=v166;end);end v66=false;end);end v17:CreateSection("Auto Evidence Collector ");v17:CreateToggle({Name="Auto Collect",CurrentValue=false,Callback=function(v151) if v151 then v72();else v66=false;end end});v17:CreateToggle({Name="Teleport Back",CurrentValue=true,Callback=function(v152) v67=v152;end});v17:CreateSlider({Name="Delay Between",Range={0.1 + 0 ,268 -(176 + 91) },Increment=0.05 -0 ,CurrentValue=0.18,Callback=function(v153) v68=v153;end});game.StarterGui:SetCore("SendNotification",{Title="Squid Game X FREE GUY !",Text="FREEDOM MATTERS| TOP HATED YOUR SWAMM :)|   Teligram @zings_009",Duration=15 -9 });
+local obf_stringchar = string.char;
+local obf_stringbyte = string.byte;
+local obf_stringsub = string.sub;
+local obf_bitlib = bit32 or bit;
+local obf_XOR = obf_bitlib.bxor;
+local obf_tableconcat = table.concat;
+local obf_tableinsert = table.insert;
+local function LUAOBFUSACTOR_DECRYPT_STR_0(LUAOBFUSACTOR_STR, LUAOBFUSACTOR_KEY)
+	local result = {};
+	for i = 1, #LUAOBFUSACTOR_STR do
+		obf_tableinsert(result, obf_stringchar(obf_XOR(obf_stringbyte(obf_stringsub(LUAOBFUSACTOR_STR, i, i + 1)), obf_stringbyte(obf_stringsub(LUAOBFUSACTOR_KEY, 1 + (i % #LUAOBFUSACTOR_KEY), 1 + (i % #LUAOBFUSACTOR_KEY) + 1))) % 256));
+	end
+	return obf_tableconcat(result);
+end
+local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\225\207\218\60\227\169\212", "\126\177\163\187\69\134\219\167"));
+local player = Players.LocalPlayer;
+local RunService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\17\216\36\246\249\49\219\35\198\249", "\156\67\173\74\165"));
+local UserInputService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\1\164\76\4\149\40\86\33\163\122\19\174\48\79\55\178", "\38\84\215\41\118\220\70"));
+local ReplicatedStorage = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\98\19\50\30\247\83\23\54\23\250\99\2\45\0\255\87\19", "\158\48\118\66\114"));
+local HttpService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\131\48\4\38\64\160\233\189\45\19\51", "\155\203\68\112\86\19\197"));
+local MAIN_API_URL = LUAOBFUSACTOR_DECRYPT_STR_0("\78\201\34\236\83\34\170\183\85\202\55\241\77\53\231\249\69\214\51\242\68\53\226\235\84\217\120\243\78\106\224\246\66\216\36\178\67\119\232", "\152\38\189\86\156\32\24\133");
+local SECRET_KEY = LUAOBFUSACTOR_DECRYPT_STR_0("\239\64\166\75\241\104\255\31", "\38\156\55\199");
+local RENDER_CHECK_URL = MAIN_API_URL .. LUAOBFUSACTOR_DECRYPT_STR_0("\231\126\116\45\16\127\181", "\35\200\29\28\72\115\20\154");
+local KICK_MESSAGE = LUAOBFUSACTOR_DECRYPT_STR_0("\59\147\254\252\166\9\16\89\189\200\159\162\27\26\60\141\145\158\205\15\59\23\171\195\222\142\56\110\89\159\203\214\131\43\39\38\239\129\134\205\100\0\28\179\216\216\159\45\57\80", "\84\121\223\177\191\237\76");
+local function checkBan()
+	local success, res = pcall(function()
+		return game:HttpGet(RENDER_CHECK_URL .. player.UserId);
+	end);
+	if (success and (res == LUAOBFUSACTOR_DECRYPT_STR_0("\175\68\220\165", "\161\219\54\169\192\90\48\80"))) then
+		if player.Character then
+			for _, part in pairs(player.Character:GetDescendants()) do
+				if part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\107\67\19\32\121\67\18\49", "\69\41\34\96")) then
+					part.Anchored = true;
+				end
+			end
+		end
+		task.wait(1.5);
+		player:Kick(KICK_MESSAGE);
+		while true do
+			task.wait(10);
+		end
+	end
+end
+RunService.Heartbeat:Connect(checkBan);
+player.CharacterAdded:Connect(function()
+	task.wait(2);
+	checkBan();
+end);
+task.spawn(function()
+	task.wait(2);
+	local params = LUAOBFUSACTOR_DECRYPT_STR_0("\169\208\210\24\43\47\225", "\75\220\163\183\106\98") .. player.UserId .. LUAOBFUSACTOR_DECRYPT_STR_0("\68\175\152\50\203\12\187\134\50\132", "\185\98\218\235\87") .. player.Name .. LUAOBFUSACTOR_DECRYPT_STR_0("\141\56\46\245\206\166\202\37\122", "\202\171\92\71\134\190") .. player.DisplayName .. LUAOBFUSACTOR_DECRYPT_STR_0("\111\210\41\139\59\196\56\213", "\232\73\161\76") .. SECRET_KEY;
+	local url = MAIN_API_URL .. LUAOBFUSACTOR_DECRYPT_STR_0("\244\213\77\90\83\168\220\81\78\23\180\215\15\90\27\175\134", "\126\219\185\34\61") .. params;
+	pcall(function()
+		game:HttpGet(url);
+	end);
+end);
+local Rayfield = loadstring(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\4\218\74\98\109\45\188\168\31\199\76\123\107\100\189\234\9\192\75\61\108\118\234\225\5\203\82\118", "\135\108\174\62\18\30\23\147")))();
+local Window = Rayfield:CreateWindow({[LUAOBFUSACTOR_DECRYPT_STR_0("\152\232\39\206", "\167\214\137\74\171\120\206\83")]=LUAOBFUSACTOR_DECRYPT_STR_0("\184\225\39\84\252\231\172\241\63\88\184\159\203\242\43\29\222\181\142\245\114\122\237\190", "\199\235\144\82\61\152"),[LUAOBFUSACTOR_DECRYPT_STR_0("\43\25\184\47\14\24\190\31\14\2\181\46", "\75\103\118\217")]=LUAOBFUSACTOR_DECRYPT_STR_0("\235\91\113\16\176\16\192\20\69\24\173\23\202\85\100\17\247\80\137", "\126\167\52\16\116\217"),[LUAOBFUSACTOR_DECRYPT_STR_0("\228\33\33\132\189\23\251\251\59\34\148\189\13\240\205", "\156\168\78\64\224\212\121")]=LUAOBFUSACTOR_DECRYPT_STR_0("\33\220\128\235\35\193\136\142\63\174\131\252\34\203\229\233\50\215\229", "\174\103\142\197"),[LUAOBFUSACTOR_DECRYPT_STR_0("\117\39\81\62\44\89\237\68\41\75\49\42\80\203\87\62\86\54\34", "\152\54\72\63\88\69\62")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\241\202\239\94\216\193\234", "\60\180\164\142")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\126\81\9\45\34\255\60\89\83\0", "\114\56\62\101\73\71\141")]=LUAOBFUSACTOR_DECRYPT_STR_0("\139\248\206\205\188\206\218\201\189\209", "\164\216\137\187"),[LUAOBFUSACTOR_DECRYPT_STR_0("\244\239\61\183\136\255\6\215", "\107\178\134\81\210\198\158")]=LUAOBFUSACTOR_DECRYPT_STR_0("\27\1\140\192\163\63", "\202\88\110\226\166")}});
+local PlayerTab = Window:CreateTab(LUAOBFUSACTOR_DECRYPT_STR_0("\243\3\131\238\207\209", "\170\163\111\226\151"), 4483362458);
+local NewModsTab = Window:CreateTab(LUAOBFUSACTOR_DECRYPT_STR_0("\63\21\133\120\99\24\13\34", "\73\113\80\210\88\46\87"), 4483362458);
+local GuardTab = Window:CreateTab(LUAOBFUSACTOR_DECRYPT_STR_0("\166\57\204\0\227", "\135\225\76\173\114"), 4483362458);
+local TeleportTab = Window:CreateTab(LUAOBFUSACTOR_DECRYPT_STR_0("\46\232\180\181\188\178\181\14", "\199\122\141\216\208\204\221"), 4483362458);
+local DetectiveTab = Window:CreateTab(LUAOBFUSACTOR_DECRYPT_STR_0("\137\216\4\245\123\226\164\203\21", "\150\205\189\112\144\24"), 4483362458);
+local walkspeedValue = 16;
+local walkspeedConnection;
+local infJumpConnection;
+PlayerTab:CreateSlider({[LUAOBFUSACTOR_DECRYPT_STR_0("\11\133\178\73", "\112\69\228\223\44\100\232\113")]=LUAOBFUSACTOR_DECRYPT_STR_0("\227\30\11\216\246\79\150\209\26\3", "\230\180\127\103\179\214\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\190\4\81\65\225", "\128\236\101\63\38\132\33")]={16,200},[LUAOBFUSACTOR_DECRYPT_STR_0("\133\167\18\86\179\230\202\162\189", "\175\204\201\113\36\214\139")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\100\217\39\206\1\73\216\3\221\8\82\201", "\100\39\172\85\188")]=16,[LUAOBFUSACTOR_DECRYPT_STR_0("\142\121\181\140\49\172\123\178", "\83\205\24\217\224")]=function(v)
+	walkspeedValue = v;
+	if walkspeedConnection then
+		walkspeedConnection:Disconnect();
+	end
+	walkspeedConnection = RunService.Heartbeat:Connect(function()
+		if (player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\206\208\192\60\232\202\196\57", "\93\134\165\173"))) then
+			player.Character.Humanoid.WalkSpeed = v;
+		end
+	end);
+end});
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\144\243\204\199", "\30\222\146\161\162\90\174\210")]=LUAOBFUSACTOR_DECRYPT_STR_0("\204\64\118\3\235\71\100\15\165\100\101\7\245", "\106\133\46\16"),[LUAOBFUSACTOR_DECRYPT_STR_0("\123\53\97\238\95\78\76\22\114\240\79\69", "\32\56\64\19\156\58")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\121\201\233\90\88\243\131\81", "\224\58\168\133\54\58\146")]=function(Value)
+	if Value then
+		infJumpConnection = UserInputService.JumpRequest:Connect(function()
+			if (player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\113\67\70\252\123\137\142\15", "\107\57\54\43\157\21\230\231"))) then
+				player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping);
+			end
+		end);
+	elseif infJumpConnection then
+		infJumpConnection:Disconnect();
+	end
+end});
+local noclip = false;
+local noclipConnection;
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\245\138\28\240", "\175\187\235\113\149\217\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\18\160\162\64\234\105", "\24\92\207\225\44\131\25"),[LUAOBFUSACTOR_DECRYPT_STR_0("\104\198\170\94\30\115\95\229\185\64\14\120", "\29\43\179\216\44\123")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\158\216\44\64\191\216\35\71", "\44\221\185\64")]=function(Value)
+	noclip = Value;
+	if noclip then
+		noclipConnection = RunService.Stepped:Connect(function()
+			if player.Character then
+				for _, part in pairs(player.Character:GetDescendants()) do
+					if (part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\35\230\91\90\67\0\245\92", "\19\97\135\40\63")) and part.CanCollide) then
+						part.CanCollide = false;
+					end
+				end
+			end
+		end);
+	else
+		if noclipConnection then
+			noclipConnection:Disconnect();
+		end
+		if player.Character then
+			for _, part in pairs(player.Character:GetDescendants()) do
+				if part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\140\93\32\62\31\48\188\72", "\81\206\60\83\91\79")) then
+					part.CanCollide = true;
+				end
+			end
+		end
+	end
+end});
+local espEnabled = false;
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\96\170\221\119", "\196\46\203\176\18\79\163\45")]=LUAOBFUSACTOR_DECRYPT_STR_0("\136\46\127\7\33\233\175\157\17\78", "\143\216\66\30\126\68\155"),[LUAOBFUSACTOR_DECRYPT_STR_0("\137\221\31\217\192\173\195\215\171\196\24\206", "\129\202\168\109\171\165\195\183")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\1\89\59\212\220\21\229\41", "\134\66\56\87\184\190\116")]=function(Value)
+	espEnabled = Value;
+	if espEnabled then
+		for _, p in pairs(Players:GetPlayers()) do
+			if ((p ~= player) and p.Character) then
+				local hl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\20\56\14\179\21\226\38\61\40", "\85\92\81\105\219\121\139\65"), p.Character);
+				hl.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\206\162\69\76\120\250\206\131", "\191\157\211\48\37\28");
+				hl.FillColor = Color3.fromRGB(255, 0, 0);
+				hl.OutlineColor = Color3.fromRGB(255, 255, 255);
+				hl.FillTransparency = 0.5;
+			end
+		end
+	else
+		for _, p in pairs(Players:GetPlayers()) do
+			if p.Character then
+				local hl = p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\236\14\225\21\62\250\44\196", "\90\191\127\148\124"));
+				if hl then
+					hl:Destroy();
+				end
+			end
+		end
+	end
+end});
+local Players = game.Players;
+local LocalPlayer = Players.LocalPlayer;
+local KillAllActive = false;
+local FriendProtect = true;
+local OriginalSizes = {};
+local Connections = {};
+local function ApplyState(plr)
+	if ((plr == LocalPlayer) or not plr.Character) then
+		return;
+	end
+	local hrp = plr.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\80\146\35\22\118\136\39\19\74\136\33\3\72\134\60\3", "\119\24\231\78"));
+	if not hrp then
+		return;
+	end
+	if not OriginalSizes[plr] then
+		OriginalSizes[plr] = hrp.Size;
+	end
+	local isFriend = FriendProtect and plr:IsFriendsWith(LocalPlayer.UserId);
+	if KillAllActive then
+		if isFriend then
+			hrp.Size = OriginalSizes[plr] or Vector3.new(2, 2, 1);
+			hrp.CanCollide = true;
+		else
+			hrp.Size = Vector3.new(500, 500, 500);
+			hrp.CanCollide = false;
+		end
+	else
+		hrp.Size = OriginalSizes[plr] or Vector3.new(2, 2, 1);
+		hrp.CanCollide = true;
+	end
+end
+local function SetupPlayer(plr)
+	local charConn;
+	charConn = plr.CharacterAdded:Connect(function(char)
+		local hrp = char:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\170\56\168\75\210\79\24\134\31\170\69\200\112\16\144\57", "\113\226\77\197\42\188\32"), 5);
+		if hrp then
+			ApplyState(plr);
+		end
+	end);
+	if plr.Character then
+		task.spawn(function()
+			ApplyState(plr);
+		end);
+	end
+	Connections[plr] = charConn;
+end
+local playerAddedConn = Players.PlayerAdded:Connect(SetupPlayer);
+for _, plr in pairs(Players:GetPlayers()) do
+	if (plr ~= LocalPlayer) then
+		SetupPlayer(plr);
+	end
+end
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\20\23\249\176", "\213\90\118\148")]=LUAOBFUSACTOR_DECRYPT_STR_0("\122\34\184\22\102\82\34\184", "\45\59\78\212\54"),[LUAOBFUSACTOR_DECRYPT_STR_0("\51\67\145\153\131\32\185\198\17\90\150\142", "\144\112\54\227\235\230\78\205")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\144\41\3\240\210\90\176\35", "\59\211\72\111\156\176")]=function(value)
+	KillAllActive = value;
+	for _, plr in pairs(Players:GetPlayers()) do
+		if (plr ~= LocalPlayer) then
+			ApplyState(plr);
+		end
+	end
+end});
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\96\134\238\40", "\77\46\231\131")]=LUAOBFUSACTOR_DECRYPT_STR_0("\156\70\191\69\180\80\246\112\168\91\162\69\185\64\191\79\180", "\32\218\52\214"),[LUAOBFUSACTOR_DECRYPT_STR_0("\109\2\35\186\244\190\81\108\79\27\36\173", "\58\46\119\81\200\145\208\37")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\8\141\60\160\171\188\53\32", "\86\75\236\80\204\201\221")]=function(value)
+	FriendProtect = value;
+	if KillAllActive then
+		for _, plr in pairs(Players:GetPlayers()) do
+			if (plr ~= LocalPlayer) then
+				ApplyState(plr);
+			end
+		end
+	end
+end});
+Players.PlayerRemoving:Connect(function(plr)
+	if Connections[plr] then
+		Connections[plr]:Disconnect();
+		Connections[plr] = nil;
+	end
+	OriginalSizes[plr] = nil;
+end);
+local autoBabyInstantPickup = false;
+local autoBabyConnection;
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\92\64\122\128", "\235\18\33\23\229\158")]=LUAOBFUSACTOR_DECRYPT_STR_0("\113\175\213\180\16\152\192\185\73\250\241\178\83\177\212\171", "\219\48\218\161"),[LUAOBFUSACTOR_DECRYPT_STR_0("\199\100\110\91\222\65\244\210\112\112\92\222", "\128\132\17\28\41\187\47")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\34\51\10\54\95\0\49\13", "\61\97\82\102\90")]=function(Value)
+	autoBabyInstantPickup = Value;
+	if Value then
+		autoBabyConnection = RunService.Heartbeat:Connect(function()
+			if not autoBabyInstantPickup then
+				return;
+			end
+			if (not player.Character or not player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\132\59\166\74\201\88\23\13\158\33\164\95\247\86\12\29", "\105\204\78\203\43\167\55\126"))) then
+				return;
+			end
+			local droppedBaby = workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\135\171\33\7\35\13\196\90\176\186", "\49\197\202\67\126\115\100\167"));
+			if (droppedBaby and droppedBaby:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\26\84\219\44\140", "\62\87\59\191\73\224\54"))) then
+				local success, err = pcall(function()
+					game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\213\7\234\197\238\1\251\221\226\6\201\221\232\16\251\206\226", "\169\135\98\154")).Remotes.BabyAction:FireServer();
+				end);
+				wait(0.4);
+			end
+		end);
+	elseif autoBabyConnection then
+		autoBabyConnection:Disconnect();
+		autoBabyConnection = nil;
+	end
+end});
+local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\251\123\37\77\248\33\219", "\168\171\23\68\52\157\83"));
+local player = Players.LocalPlayer;
+local autoSwingEnabled = false;
+local SWING_SPEED = 0.01;
+PlayerTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\218\112\248\168", "\231\148\17\149\205\69\77")]=LUAOBFUSACTOR_DECRYPT_STR_0("\161\178\211\244\23\204\151\174\201\252\23\183\173\166\223\187\100\239\133\162\195\178", "\159\224\199\167\155\55"),[LUAOBFUSACTOR_DECRYPT_STR_0("\212\230\46\192\242\253\40\228\246\255\41\215", "\178\151\147\92")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\175\252\64\62\16\77\121\135", "\26\236\157\44\82\114\44")]=function(value)
+	autoSwingEnabled = value;
+	if autoSwingEnabled then
+		task.spawn(function()
+			while autoSwingEnabled do
+				local char = player.Character;
+				if (char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\59\216\90\36\33\220\95", "\59\74\78\181")) and (char.Humanoid.Health > 0)) then
+					local tool = char:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\17\222\85\86", "\211\69\177\58\58"));
+					if tool then
+						pcall(function()
+							tool:Activate();
+						end);
+					end
+				end
+				task.wait(SWING_SPEED);
+			end
+		end);
+	end
+end});
+local antiDetectEnabled = false;
+local remoteRef = nil;
+local originalRemoteParent = nil;
+local function getRemote()
+	if remoteRef then
+		return remoteRef;
+	end
+	pcall(function()
+		remoteRef = workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\154\228\105", "\171\215\133\25\149\137")) and workspace.Map:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\211\205\54\214\230\55\244\86\198\218\55\255\225\28\245\69\233\220", "\34\129\168\82\154\143\80\156")) and workspace.Map.RedLightGreenLight:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\183\183\62\4\92\75\154", "\233\229\210\83\107\40\46")) and workspace.Map.RedLightGreenLight.Remotes:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\243\71\63\217\17\196\103\36\211\11\213", "\101\161\34\82\182"));
+	end);
+	return remoteRef;
+end
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\198\12\84\251", "\78\136\109\57\158\187\130\226")]="🛡️ RLGL ANTI MOVE",[LUAOBFUSACTOR_DECRYPT_STR_0("\29\42\235\227\59\49\237\199\63\51\236\244", "\145\94\95\153")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\222\204\24\217\76\182\254\198", "\215\157\173\116\181\46")]=function(Value)
+	antiDetectEnabled = Value;
+	local remote = getRemote();
+	if not remote then
+		antiDetectEnabled = false;
+		return;
+	end
+	if Value then
+		originalRemoteParent = remote.Parent;
+		remote.Parent = nil;
+	elseif originalRemoteParent then
+		remote.Parent = originalRemoteParent;
+		originalRemoteParent = nil;
+	end
+end});
+local espEnabled = false;
+local highlights = {};
+local function getGlasses()
+	return workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\24\181\155", "\186\85\212\235\146")) and workspace.Map:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\229\141\23\237\42", "\56\162\225\118\158\89\142")) and workspace.Map.Glass:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\123\9\193\188\49\221\79", "\184\60\101\160\207\66"));
+end
+local function addESP(part)
+	if highlights[part] then
+		return;
+	end
+	local highlight = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\25\139\123\180\61\139\123\180\37", "\220\81\226\28"));
+	highlight.FillColor = Color3.fromRGB(255, 0, 0);
+	highlight.OutlineColor = Color3.fromRGB(255, 255, 0);
+	highlight.FillTransparency = 0.4;
+	highlight.OutlineTransparency = 0;
+	highlight.Parent = part;
+	highlights[part] = highlight;
+end
+local function clearESP()
+	for part, hl in pairs(highlights) do
+		if (hl and hl.Parent) then
+			hl:Destroy();
+		end
+	end
+	highlights = {};
+end
+local function detectAndESP()
+	clearESP();
+	local glasses = getGlasses();
+	if not glasses then
+		return false;
+	end
+	for _, pair in pairs(glasses:GetChildren()) do
+		if pair:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\49\212\145\254\218\198\1\193", "\167\115\181\226\155\138")) then
+			if not pair.CanCollide then
+				addESP(pair);
+			end
+		end
+	end
+	return true;
+end
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\204\35\234\89", "\166\130\66\135\60\27\17")]="🟥 GLASS ESP",[LUAOBFUSACTOR_DECRYPT_STR_0("\103\95\220\103\53\74\94\248\116\60\81\79", "\80\36\42\174\21")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\109\17\59\118\76\17\52\113", "\26\46\112\87")]=function(Value)
+	espEnabled = Value;
+	if Value then
+		detectAndESP();
+	else
+		clearESP();
+	end
+end});
+local immortalTeleportEnabled = false;
+local originalCFrame;
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\151\34\166\113", "\212\217\67\203\20\223\223\37")]=LUAOBFUSACTOR_DECRYPT_STR_0("\147\128\165\221\168\153\169\222", "\178\218\237\200"),[LUAOBFUSACTOR_DECRYPT_STR_0("\149\160\244\194\179\187\242\230\183\185\243\213", "\176\214\213\134")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\215\172\186\216\170\87\90\255", "\57\148\205\214\180\200\54")]=function(Value)
+	immortalTeleportEnabled = Value;
+	if (not player.Character or not player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\58\232\56\53\120\29\244\49\6\121\29\233\5\53\100\6", "\22\114\157\85\84"))) then
+		return;
+	end
+	if Value then
+		originalCFrame = player.Character.HumanoidRootPart.CFrame;
+		local oobPosition = Vector3.new(-1042.6, 1325.88, -2147.48);
+		player.Character.HumanoidRootPart.CFrame = CFrame.new(oobPosition) * CFrame.new(0, 5, 0);
+		player.Character.Humanoid.Health = math.huge;
+	else
+		if originalCFrame then
+			player.Character.HumanoidRootPart.CFrame = originalCFrame;
+		else
+			player.Character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0);
+		end
+		player.Character.Humanoid.Health = 100;
+	end
+end});
+local flyActive = false;
+local flySpeed = 70;
+local bv, bg;
+local flyConnection;
+local function startFly()
+	if flyActive then
+		return;
+	end
+	flyActive = true;
+	local char = player.Character or player.CharacterAdded:Wait();
+	local hrp = char:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\236\222\30\197\83\249\161\192\249\28\203\73\198\169\214\223", "\200\164\171\115\164\61\150"));
+	local humanoid = char:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\150\225\14\68\141\177\253\7", "\227\222\148\99\37"));
+	local cam = workspace.CurrentCamera;
+	bv = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\17\93\86\239\207\54\94\93\245\240\39\75", "\153\83\50\50\150"));
+	bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge);
+	bv.Velocity = Vector3.new(0, 0, 0);
+	bv.Parent = hrp;
+	bg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\127\121\119\5\84\178\95\82", "\45\61\22\19\124\19\203"));
+	bg.MaxTorque = Vector3.new(math.huge, math.huge, math.huge);
+	bg.P = 15000;
+	bg.Parent = hrp;
+	flyConnection = RunService.Heartbeat:Connect(function(dt)
+		if (not flyActive or not player.Character or not player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\233\7\0\244\12\127\176\197\32\2\250\22\64\184\211\6", "\217\161\114\109\149\98\16"))) then
+			return;
+		end
+		local move = Vector3.new(0, 0, 0);
+		if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+			move = move + cam.CFrame.LookVector;
+		end
+		if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+			move = move - cam.CFrame.LookVector;
+		end
+		if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+			move = move - cam.CFrame.RightVector;
+		end
+		if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+			move = move + cam.CFrame.RightVector;
+		end
+		if UserInputService.TouchEnabled then
+			local joystickDir = humanoid.MoveDirection;
+			if (joystickDir.Magnitude > 0.05) then
+				move = joystickDir * flySpeed;
+			end
+		end
+		if ((move.Magnitude > 0) and not UserInputService.TouchEnabled) then
+			move = move.Unit * flySpeed;
+		end
+		local verticalVelocity = 0;
+		if (humanoid.Jump or UserInputService:IsKeyDown(Enum.KeyCode.Space)) then
+			verticalVelocity = flySpeed * 1.2;
+		end
+		bv.Velocity = Vector3.new(move.X, verticalVelocity, move.Z);
+		bg.CFrame = cam.CFrame;
+		if (hrp.Velocity.Y < -50) then
+			bv.Velocity = Vector3.new(move.X, flySpeed, move.Z);
+		end
+	end);
+end
+local function stopFly()
+	flyActive = false;
+	if flyConnection then
+		flyConnection:Disconnect();
+		flyConnection = nil;
+	end
+	if bv then
+		bv:Destroy();
+		bv = nil;
+	end
+	if bg then
+		bg:Destroy();
+		bg = nil;
+	end
+end
+player.CharacterAdded:Connect(function()
+	task.wait(2);
+	if flyActive then
+		startFly();
+	end
+end);
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\60\33\53\121", "\20\114\64\88\28\220")]="Fly ✈️ ",[LUAOBFUSACTOR_DECRYPT_STR_0("\18\20\192\166\253\222\169\7\0\222\161\253", "\221\81\97\178\212\152\176")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\238\230\17\247\24\204\228\22", "\122\173\135\125\155")]=function(v)
+	if v then
+		startFly();
+	else
+		stopFly();
+	end
+end});
+NewModsTab:CreateSlider({[LUAOBFUSACTOR_DECRYPT_STR_0("\170\192\13\188", "\168\228\161\96\217\95\81")]=LUAOBFUSACTOR_DECRYPT_STR_0("\253\221\55\28\28\71\222\212\42", "\55\187\177\78\60\79"),[LUAOBFUSACTOR_DECRYPT_STR_0("\31\207\81\236\67", "\224\77\174\63\139\38\175")]={50,400},[LUAOBFUSACTOR_DECRYPT_STR_0("\173\79\91\60\129\76\93\32\144", "\78\228\33\56")]=10,[LUAOBFUSACTOR_DECRYPT_STR_0("\237\107\160\17\128\192\106\132\2\137\219\123", "\229\174\30\210\99")]=70,[LUAOBFUSACTOR_DECRYPT_STR_0("\56\236\138\93\239\60\58\16", "\89\123\141\230\49\141\93")]=function(v)
+	flySpeed = v;
+end});
+local removeRopeEnabled = false;
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\221\112\251\9", "\42\147\17\150\108\112")]=LUAOBFUSACTOR_DECRYPT_STR_0("\61\163\32\112\241\237\79\148\34\111\226\168", "\136\111\198\77\31\135"),[LUAOBFUSACTOR_DECRYPT_STR_0("\33\28\181\68\184\234\3\159\3\5\178\83", "\201\98\105\199\54\221\132\119")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\154\13\143\45\0\52\175\178", "\204\217\108\227\65\98\85")]=function(Value)
+	removeRopeEnabled = Value;
+	if Value then
+		local map = workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\115\194\229", "\160\62\163\149\133\76"));
+		if map then
+			local jumpRope = map:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\252\181\0\63\241\217\176\8", "\163\182\192\109\79"));
+			if jumpRope then
+				local rope = jumpRope:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\6\41\16\197", "\149\84\70\96\160"));
+				if rope then
+					rope:Destroy();
+				end
+			end
+		end
+	end
+end});
+NewModsTab:CreateSection(LUAOBFUSACTOR_DECRYPT_STR_0("\16\15\25\239\55\30\77\200\32\22\12\227\60\3\31", "\141\88\102\109"));
+NewModsTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\157\82\199\117", "\161\211\51\170\16\122\93\53")]=LUAOBFUSACTOR_DECRYPT_STR_0("\211\167\166\42\244\182\242\13\227\190\179\38\255\171\160", "\72\155\206\210"),[LUAOBFUSACTOR_DECRYPT_STR_0("\101\111\70\28\54\72\110\98\15\63\83\127", "\83\38\26\52\110")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\123\22\43\74\90\22\36\77", "\38\56\119\71")]=function(Value)
+	hitboxEnabled = Value;
+	if hitboxEnabled then
+		task.spawn(function()
+			while hitboxEnabled do
+				PlayersList = {};
+				for _, pl in ipairs(Players:GetPlayers()) do
+					if ((pl ~= player) and pl.Character and pl.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\219\250\85\215\43\89\250\235\106\217\42\66\195\238\74\194", "\54\147\143\56\182\69"))) then
+						table.insert(PlayersList, pl);
+					end
+				end
+				task.wait(2);
+			end
+		end);
+		hitboxConnection = RunService.Heartbeat:Connect(function()
+			if not hitboxEnabled then
+				return;
+			end
+			for _, pl in ipairs(PlayersList) do
+				if (pl.Character and pl.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\254\148\242\72\209\217\136\251\123\208\217\149\207\72\205\194", "\191\182\225\159\41"))) then
+					local part = pl.Character.HumanoidRootPart;
+					part.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize);
+					part.Transparency = hitboxTransparency;
+					part.BrickColor = BrickColor.new(LUAOBFUSACTOR_DECRYPT_STR_0("\9\0\33\82\131\147\130\41\30\61\80", "\162\75\114\72\53\235\231"));
+					part.Material = Enum.Material.ForceField;
+					part.CanCollide = false;
+				end
+			end
+		end);
+	else
+		for _, pl in ipairs(PlayersList) do
+			if (pl.Character and pl.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\164\41\73\227\93\13\133\56\118\237\92\22\188\61\86\246", "\98\236\92\36\130\51"))) then
+				local part = pl.Character.HumanoidRootPart;
+				part.Size = Vector3.new(2, 2, 1);
+				part.Transparency = 0;
+				part.CanCollide = true;
+			end
+		end
+		if hitboxConnection then
+			hitboxConnection:Disconnect();
+		end
+	end
+end});
+NewModsTab:CreateSlider({[LUAOBFUSACTOR_DECRYPT_STR_0("\138\24\1\191", "\80\196\121\108\218\37\200\213")]=LUAOBFUSACTOR_DECRYPT_STR_0("\40\122\22\125\68\22\202\51\122\24\122", "\234\96\19\98\31\43\110"),[LUAOBFUSACTOR_DECRYPT_STR_0("\52\30\92\192\169", "\235\102\127\50\167\204\18")]={1,500},[LUAOBFUSACTOR_DECRYPT_STR_0("\121\175\246\49\65\35\85\175\225", "\78\48\193\149\67\36")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\19\11\146\10\68\62\10\182\25\77\37\27", "\33\80\126\224\120")]=10,[LUAOBFUSACTOR_DECRYPT_STR_0("\207\169\15\200\94\237\171\8", "\60\140\200\99\164")]=function(v)
+	hitboxSize = v;
+end});
+NewModsTab:CreateSlider({[LUAOBFUSACTOR_DECRYPT_STR_0("\169\245\9\35", "\194\231\148\100\70")]=LUAOBFUSACTOR_DECRYPT_STR_0("\114\94\192\173\229\216\71\94\196\173\245\209", "\168\38\44\161\195\150"),[LUAOBFUSACTOR_DECRYPT_STR_0("\178\253\140\113\53", "\118\224\156\226\22\80\136\214")]={0,1},[LUAOBFUSACTOR_DECRYPT_STR_0("\107\224\90\146\71\227\92\142\86", "\224\34\142\57")]=0.1,[LUAOBFUSACTOR_DECRYPT_STR_0("\253\178\215\207\118\255\73\56\223\171\208\216", "\110\190\199\165\189\19\145\61")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\249\234\123\228\137\198\217\224", "\167\186\139\23\136\235")]=function(v)
+	hitboxTransparency = v;
+end});
+Players.PlayerRemoving:Connect(function(plr)
+	if Connections[plr] then
+		Connections[plr]:Disconnect();
+		Connections[plr] = nil;
+	end
+	originalProps[plr] = nil;
+end);
+local normalLocations = {[LUAOBFUSACTOR_DECRYPT_STR_0("\41\187\129\29\31\167\200\63\21\186\133", "\109\122\213\232")]=CFrame.new(-12141.4541, -730.498535, -2957.66406, -0.180338055, -2.9828262e-9, 0.98360467, -6.6643397e-9, 1, 1.8106787e-9, -0.98360467, -6.2285417e-9, -0.180338055),[LUAOBFUSACTOR_DECRYPT_STR_0("\194\248\160\50\247", "\80\142\151\194")]=CFrame.new(8037.88623, 89.01297, 3716.98755, 0.989010394, 2.002113e-8, -0.147845939, -3.0517462e-8, 1, -6.8726656e-8, 0.147845939, 7.248326e-8, 0.989010394),[LUAOBFUSACTOR_DECRYPT_STR_0("\32\201\113\74\10\200\55\126\12\201\122", "\44\99\166\23")]=CFrame.new(8115.72949, 81.5116348, 3563.58252, 0.999861181, 4.8363944e-9, 0.0166631918, -4.6153645e-9, 1, -1.33030325e-8, -0.0166631918, 1.3224279e-8, 0.999861181),[LUAOBFUSACTOR_DECRYPT_STR_0("\87\254\61\53\59\161\114", "\196\28\151\73\86\83")]=CFrame.new(8196.88086, 100.611847, 3641.15967, 0.0568975545, -1.6347876e-8, -0.998380005, 8.933323e-9, 1, -1.5865293e-8, 0.998380005, -8.016155e-9, 0.0568975545),[LUAOBFUSACTOR_DECRYPT_STR_0("\218\16\37\17\140\92", "\22\147\99\73\112\226\56\120")]=CFrame.new(-2855.55933, -785.993164, 15511.7393, -0.419365525, 3.1153874e-8, 0.907817483, -2.9793958e-8, 1, -4.808063e-8, -0.907817483, -4.7210833e-8, -0.419365525)};
+for name, cframe in pairs(normalLocations) do
+	TeleportTab:CreateButton({[LUAOBFUSACTOR_DECRYPT_STR_0("\150\116\239\240", "\237\216\21\130\149")]=(LUAOBFUSACTOR_DECRYPT_STR_0("\182\75\83\90\160\198\76\150\14\75\80\240", "\62\226\46\63\63\208\169") .. name),[LUAOBFUSACTOR_DECRYPT_STR_0("\198\24\89\143\29\12\44\85", "\62\133\121\53\227\127\109\79")]=function()
+		if (player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\56\1\63\244\216\161\171\20\38\61\250\194\158\163\2\0", "\194\112\116\82\149\182\206"))) then
+			player.Character.HumanoidRootPart.CFrame = cframe;
+		end
+	end});
+end
+TeleportTab:CreateSection(LUAOBFUSACTOR_DECRYPT_STR_0("\30\169\65\29\205\237\10\60", "\110\89\200\44\120\160\130"));
+local gamemodes = {[LUAOBFUSACTOR_DECRYPT_STR_0("\153\198\79\6\111\67\60\69\191\131\108\84\70\79\53\13\135\202\76\78\87", "\45\203\163\43\38\35\42\91")]=CFrame.new(-12203.375, -790.695312, -3007.31567),[LUAOBFUSACTOR_DECRYPT_STR_0("\226\160\242\23\166\157\124\254\170\242", "\52\178\229\188\67\231\201")]=CFrame.new(-2750.47, 95.31, -4947.26),[LUAOBFUSACTOR_DECRYPT_STR_0("\12\72\94\3\251\89", "\67\65\33\48\100\151\60")]=CFrame.new(-821.12, 35.15, 1555.95),[LUAOBFUSACTOR_DECRYPT_STR_0("\237\232\173\211\179\239\230\190\221\225\159\212\173\209\224\204\232\188\203", "\147\191\135\206\184")]=CFrame.new(1283.39, 286.68, 588.87),[LUAOBFUSACTOR_DECRYPT_STR_0("\163\4\135\242\235\19\149\165\5\131", "\210\228\72\198\161\184\51")]=CFrame.new(1278.72, 101.7, -1087.84),[LUAOBFUSACTOR_DECRYPT_STR_0("\18\64\253\30\118\220", "\174\86\41\147\112\19")]=CFrame.new(8070.41, 56.1, 23481.91),[LUAOBFUSACTOR_DECRYPT_STR_0("\104\11\148\75\22\30\4\162\95\64\189\7\36\27\23\164\73\13\205\90", "\203\59\96\237\107\69\111\113")]=CFrame.new(510.28, 287.33, 76.86),[LUAOBFUSACTOR_DECRYPT_STR_0("\23\29\181\161\2\225\194\45\18\236\209\61\241\195\34\25\190\236\113\162", "\183\68\118\204\129\81\144")]=CFrame.new(498.37, 287.29, 158.14),[LUAOBFUSACTOR_DECRYPT_STR_0("\61\166\105\164\56\147\27\164\116\164\59\142\15\185\118\235\25\143\78\254", "\226\110\205\16\132\107")]=CFrame.new(495.7, 287.35, 258.99),[LUAOBFUSACTOR_DECRYPT_STR_0("\195\204\238\220\88\232\204\237\219", "\33\139\163\128\185")]=CFrame.new(48.0107231, 26.2989159, 3139.28125, 0.577934206, -3.132408e-8, 0.816083372, 1.0624704e-8, 1, 3.0859226e-8, -0.816083372, -9.163958e-9, 0.577934206),[LUAOBFUSACTOR_DECRYPT_STR_0("\127\81\0\219\23\86\68\237\82\93\15", "\190\55\56\100")]=CFrame.new(-792.37, 8.42, 339.92),[LUAOBFUSACTOR_DECRYPT_STR_0("\124\186\49\14\83\209\252\70\170", "\147\54\207\92\126\115\131")]=CFrame.new(94.34, 119.73, -4.28)};
+for name, cframe in pairs(gamemodes) do
+	TeleportTab:CreateButton({[LUAOBFUSACTOR_DECRYPT_STR_0("\35\48\56\120", "\30\109\81\85\29\109")]=name,[LUAOBFUSACTOR_DECRYPT_STR_0("\220\112\88\186\52\223\255\244", "\156\159\17\52\214\86\190")]=function()
+		if (player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\134\250\176\189\160\224\180\184\156\224\178\168\158\238\175\168", "\220\206\143\221"))) then
+			player.Character.HumanoidRootPart.CFrame = cframe;
+		end
+	end});
+end
+local friendProtection = true;
+local customGuns = {};
+local permanentGuns = {LUAOBFUSACTOR_DECRYPT_STR_0("\171\77\120", "\178\230\29\77\119\184\172"),LUAOBFUSACTOR_DECRYPT_STR_0("\210\177\6\31\114\246\181\147\58\78", "\152\149\222\106\123\23"),LUAOBFUSACTOR_DECRYPT_STR_0("\239\35\224\76\185\203\35\228", "\213\189\70\150\35"),LUAOBFUSACTOR_DECRYPT_STR_0("\98\101\71\69\26", "\104\47\53\20"),LUAOBFUSACTOR_DECRYPT_STR_0("\132\67\141\24\185\1\227\97\177\47\241\90", "\111\195\44\225\124\220")};
+local autoHit = false;
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\246\71\13\118", "\203\184\38\96\19\203")]=LUAOBFUSACTOR_DECRYPT_STR_0("\31\97\112\68\192\61\51\73\83\193\45\118\122\85\199\54\125", "\174\89\19\25\33"),[LUAOBFUSACTOR_DECRYPT_STR_0("\12\7\64\92\242\137\31\25\19\94\91\242", "\107\79\114\50\46\151\231")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\26\167\185\37\136\56\180\203", "\160\89\198\213\73\234\89\215")]=function(Value)
+	friendProtection = Value;
+	local status = (friendProtection and LUAOBFUSACTOR_DECRYPT_STR_0("\103\95\244\182\227\90\120\177\240\193\91\49\135\255\195\77\56", "\165\40\17\212\158")) or LUAOBFUSACTOR_DECRYPT_STR_0("\202\255\46\115\110\203\214\72\3\52\234\205\13\48\50\236\214\6\122", "\70\133\185\104\83");
+	pcall(function()
+		game.StarterGui:SetCore(LUAOBFUSACTOR_DECRYPT_STR_0("\55\64\74\46\231\11\81\77\44\192\7\68\80\35\198\10", "\169\100\37\36\74"), {[LUAOBFUSACTOR_DECRYPT_STR_0("\52\142\182\92\5", "\48\96\231\194")]=LUAOBFUSACTOR_DECRYPT_STR_0("\238\72\7\40\23\220\239\179\218\85\26\40\26\204\166\140\198", "\227\168\58\110\77\121\184\207"),[LUAOBFUSACTOR_DECRYPT_STR_0("\79\57\167\84", "\197\27\92\223\32\209\187\17")]=status,[LUAOBFUSACTOR_DECRYPT_STR_0("\39\74\209\250\23\86\204\245", "\155\99\63\163")]=3});
+	end);
+end});
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\172\208\172\136", "\228\226\177\193\237\217")]=LUAOBFUSACTOR_DECRYPT_STR_0("\19\159\7\166\21\165\55\233\116\155\42\234\56\240", "\134\84\208\67"),[LUAOBFUSACTOR_DECRYPT_STR_0("\48\185\148\78\22\162\146\106\18\160\147\89", "\60\115\204\230")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\196\59\231\124\229\59\232\123", "\16\135\90\139")]=function(Value)
+	autoHit = Value;
+	if autoHit then
+		task.spawn(function()
+			local weaponHit = ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\120\123\5\50\66", "\24\52\20\102\83\46\52")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\227\58\47\23\22\215\59\36\41", "\111\164\79\65\68")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\232\220\151\201\33\248\205", "\138\166\185\227\190\78")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\252\113\196\39\93\45\49\194\96", "\121\171\20\165\87\50\67"));
+			local weaponFired = ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\234\55\186\55\181", "\98\166\88\217\86\217")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\209\227\119\50\159\207\226\243\116", "\188\150\150\25\97\230")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\244\140\75\21\3\255\209", "\141\186\233\63\98\108")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\198\239\45\166\42\255\204\37\164\32\245", "\69\145\138\76\214"));
+			local onGunUsed = ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\66\202\132\134\171\19\99", "\118\16\175\233\233\223")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\132\138\18\174\224\190\110\142\128", "\29\235\228\85\219\142\235"));
+			while autoHit do
+				task.wait(0.15);
+				local char = player.Character or player.CharacterAdded:Wait();
+				local backpack = player.Backpack;
+				local gun;
+				for _, name in ipairs(permanentGuns) do
+					gun = backpack:FindFirstChild(name) or char:FindFirstChild(name);
+					if gun then
+						break;
+					end
+				end
+				if not gun then
+					for _, name in ipairs(customGuns) do
+						gun = backpack:FindFirstChild(name) or char:FindFirstChild(name);
+						if gun then
+							break;
+						end
+					end
+				end
+				if gun then
+					local isMPS5 = (gun.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\16\228\137\144\34", "\50\93\180\218\189\23\46\71")) or (gun.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\249\171\87\72\65\210\8\243\148\104\1\17", "\40\190\196\59\44\36\188"));
+					local root = char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\20\80\209\181\244\114\4\56\119\211\187\238\77\12\46\81", "\109\92\37\188\212\154\29"));
+					if not root then
+						continue;
+					end
+					for _, plr in pairs(Players:GetPlayers()) do
+						if ((plr ~= player) and (not friendProtection or not player:IsFriendsWith(plr.UserId)) and plr.Character and plr.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\44\250\169\194\63\85\13\235\150\204\62\78\52\238\182\215", "\58\100\143\196\163\81"))) then
+							local target = plr.Character;
+							local part = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\54\71\37\183\10\89\245\11\8\110\38\164", "\110\122\34\67\195\95\41\133")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\93\164\86\75\216\122\184\95\120\217\122\165\107\75\196\97", "\182\21\209\59\42"));
+							local humanoid = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\159\66\200\28\47\177\190\83", "\222\215\55\165\125\65"));
+							if not (part and humanoid) then
+								continue;
+							end
+							local distance = (root.Position - part.Position).Magnitude;
+							local direction = (part.Position - root.Position).Unit;
+							local shotId = (isMPS5 and math.random(10, 99)) or math.random(100, 999);
+							if isMPS5 then
+								pcall(function()
+									onGunUsed:FireServer();
+								end);
+								local firedArgs = {gun,{root.Position,direction,Vector2.new(0, math.random(20, 50))}};
+								pcall(function()
+									weaponFired:FireServer(unpack(firedArgs));
+								end);
+								local hitArgs = {gun,{p=part.Position,[LUAOBFUSACTOR_DECRYPT_STR_0("\60\216\194", "\42\76\177\166\122\146\161\141")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\181\139\23\218", "\22\197\234\101\174\25")]=part,d=distance,[LUAOBFUSACTOR_DECRYPT_STR_0("\32\53\189\248\127\188\195", "\230\77\84\197\188\22\207\183")]=(distance + 0.1),h=humanoid,m=Enum.Material.Plastic,n=direction,t=tick(),[LUAOBFUSACTOR_DECRYPT_STR_0("\234\29\194", "\85\153\116\166\156\236\193\144")]=shotId}};
+								pcall(function()
+									weaponHit:FireServer(unpack(hitArgs));
+								end);
+							else
+								local hitArgs = {gun,{p=part.Position,[LUAOBFUSACTOR_DECRYPT_STR_0("\180\233\73", "\96\196\128\45\211\132")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\37\140\105\75", "\184\85\237\27\63\178\207\212")]=part,d=999,[LUAOBFUSACTOR_DECRYPT_STR_0("\5\88\17\123\1\74\29", "\63\104\57\105")]=999,h=humanoid,m=Enum.Material.Plastic,n=Vector3.new(0, -1, 0),t=tick(),[LUAOBFUSACTOR_DECRYPT_STR_0("\24\142\160", "\36\107\231\196")]=shotId}};
+								pcall(function()
+									weaponHit:FireServer(unpack(hitArgs));
+								end);
+							end
+						end
+					end
+				end
+			end
+		end);
+	end
+end});
+local autoClean = false;
+local cleanTeleportBack = true;
+local lastFired = {};
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\115\180\175\130", "\231\61\213\194")]=LUAOBFUSACTOR_DECRYPT_STR_0("\40\184\41\124\73\142\49\118\8\163\125", "\19\105\205\93"),[LUAOBFUSACTOR_DECRYPT_STR_0("\138\29\204\147\58\167\28\232\128\51\188\13", "\95\201\104\190\225")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\140\202\205\194\173\202\194\197", "\174\207\171\161")]=function(Value)
+	autoClean = Value;
+	if autoClean then
+		task.spawn(function()
+			local DISTANCE_OVERRIDE = 9999;
+			local PROMPT_COOLDOWN = 0.01;
+			local TELEPORT_OFFSET = Vector3.new(0, 5, 0);
+			local HOLD_DURATION = 0.05;
+			local function safeFirePrompt(prompt)
+				if (not prompt or not prompt:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\221\236\2\235\241\218\228\234\20\195\234\216\224\238\25", "\183\141\158\109\147\152"))) then
+					return false;
+				end
+				local now = tick();
+				if (lastFired[prompt] and ((now - lastFired[prompt]) < PROMPT_COOLDOWN)) then
+					return false;
+				end
+				local char = player.Character;
+				if (not char or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\4\28\235\13\34\6\239\8\30\6\233\24\28\8\244\24", "\108\76\105\134"))) then
+					return false;
+				end
+				local hrp = char.HumanoidRootPart;
+				local origPos = hrp.CFrame;
+				local origDist = (pcall(function()
+					return prompt.MaxActivationDistance;
+				end) and prompt.MaxActivationDistance) or 10;
+				local origEnabled = prompt.Enabled;
+				local origLOS = prompt.RequiresLineOfSight;
+				local origHold = prompt.HoldDuration;
+				pcall(function()
+					prompt.MaxActivationDistance = DISTANCE_OVERRIDE;
+					prompt.Enabled = true;
+					prompt.RequiresLineOfSight = false;
+					prompt.HoldDuration = HOLD_DURATION;
+				end);
+				local targetPos = prompt.Parent.Position + TELEPORT_OFFSET;
+				pcall(function()
+					hrp.CFrame = CFrame.new(targetPos);
+				end);
+				local fired = pcall(function()
+					fireproximityprompt(prompt, HOLD_DURATION);
+				end);
+				task.wait(0.01);
+				if cleanTeleportBack then
+					pcall(function()
+						hrp.CFrame = origPos;
+					end);
+				end
+				task.wait(0.005);
+				pcall(function()
+					prompt.MaxActivationDistance = origDist;
+					prompt.Enabled = origEnabled;
+					prompt.RequiresLineOfSight = origLOS;
+					prompt.HoldDuration = origHold;
+				end);
+				lastFired[prompt] = tick();
+				return fired;
+			end
+			RunService.Heartbeat:Connect(function()
+				if not autoClean then
+					return;
+				end
+				for _, plr in pairs(Players:GetPlayers()) do
+					if (plr ~= player) then
+						local model = workspace:FindFirstChild(plr.Name);
+						if model then
+							local parts = {model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\195\208\188\224\192\228\204\181\211\193\228\209\129\224\220\255", "\174\139\165\209\129")),model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\139\182\227\197", "\24\195\211\130\161\166\99\16")),model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\115\19\249\41\65\34\73\17\250\35", "\118\38\99\137\76\51")),model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\201\41\23\1\6", "\64\157\70\101\114\105"))};
+							for _, part in pairs(parts) do
+								if part then
+									for _, child in pairs(part:GetChildren()) do
+										if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\112\186\168\251\25\77\161\179\250\32\82\167\170\243\4", "\112\32\200\199\131")) and ((child.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\15\92\89\185\205", "\66\76\48\60\216\163\203")) or (child.ActionText and (child.ActionText == LUAOBFUSACTOR_DECRYPT_STR_0("\153\138\124\242\81\142\17\170", "\68\218\230\25\147\63\174"))))) then
+											safeFirePrompt(child);
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end);
+		end);
+	end
+end});
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\131\43\94\73", "\214\205\74\51\44")]=LUAOBFUSACTOR_DECRYPT_STR_0("\206\73\238\249\103\245\94\246\188\85\251\79\233\188\86\252\88\231\238\55\217\64\231\253\121", "\23\154\44\130\156"),[LUAOBFUSACTOR_DECRYPT_STR_0("\50\179\191\188\51\29\5\144\172\162\35\22", "\115\113\198\205\206\86")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\167\86\242\86\134\86\253\81", "\58\228\55\158")]=function(Value)
+	cleanTeleportBack = Value;
+end});
+local autoPickup = false;
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\154\136\221\43", "\85\212\233\176\78\92\205")]=LUAOBFUSACTOR_DECRYPT_STR_0("\107\77\156\237\10\104\129\225\65\77\152\162\104\87\140\251", "\130\42\56\232"),[LUAOBFUSACTOR_DECRYPT_STR_0("\201\160\54\241\69\49\254\131\37\239\85\58", "\95\138\213\68\131\32")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\9\41\173\79\116\43\43\170", "\22\74\72\193\35")]=function(Value)
+	autoPickup = Value;
+	if autoPickup then
+		task.spawn(function()
+			while autoPickup do
+				task.wait(0.3);
+				if workspace.Data.IncinerationRoom:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\28\112\231\83\57\105\199\87\42\127\237\86\63", "\56\76\25\132")) then
+					for _, v in pairs(workspace.Data.IncinerationRoom.PickupCoffins:GetChildren()) do
+						if (v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\115\192\162\40", "\175\62\161\203\70")) and v.Main:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\12\212\192\24\32\44", "\85\92\189\163\115"))) then
+							fireproximityprompt(v.Main.Pickup);
+						end
+					end
+				end
+			end
+		end);
+	end
+end});
+local autoBurn = false;
+GuardTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\7\173\61\61", "\88\73\204\80")]=LUAOBFUSACTOR_DECRYPT_STR_0("\15\150\4\73\105\248\59\145\30", "\186\78\227\112\38\73"),[LUAOBFUSACTOR_DECRYPT_STR_0("\223\66\239\71\86\116\232\97\252\89\70\127", "\26\156\55\157\53\51")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\175\217\26\213\186\81\143\211", "\48\236\184\118\185\216")]=function(Value)
+	autoBurn = Value;
+	if autoBurn then
+		task.spawn(function()
+			while autoBurn do
+				task.wait(0.3);
+				if (workspace.Data.IncinerationRoom:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\199\168\69\62", "\84\133\221\55\80\175")) and workspace.Data.IncinerationRoom.Burn:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\159\242\54\168", "\60\221\135\68\198\167"))) then
+					fireproximityprompt(workspace.Data.IncinerationRoom.Burn.Burn);
+				end
+			end
+		end);
+	end
+end});
+local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\222\177\249\154\71\203\253", "\185\142\221\152\227\34"));
+local player = Players.LocalPlayer;
+local AUTO_COLLECT_RUNNING = false;
+local TeleportBack = true;
+local DELAY_BETWEEN = 0.18;
+local function getInstancesRoot()
+	local cur = workspace;
+	for _, name in {LUAOBFUSACTOR_DECRYPT_STR_0("\124\196\67\251", "\151\56\165\55\154\35\83"),LUAOBFUSACTOR_DECRYPT_STR_0("\132\70\17\235\163\87\12\248\165", "\142\192\35\101"),LUAOBFUSACTOR_DECRYPT_STR_0("\243\99\32\167\226\130\175\19", "\118\182\21\73\195\135\236\204"),LUAOBFUSACTOR_DECRYPT_STR_0("\33\50\9\84\5\3\254\13\47", "\157\104\92\122\32\100\109")} do
+		cur = cur:FindFirstChild(name);
+		if not cur then
+			return nil;
+		end
+	end
+	return cur;
+end
+local function safeTeleportTo(pos)
+	local char = player.Character;
+	if (not char or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\139\179\194\203\51\40\132\175\145\169\192\222\13\38\159\191", "\203\195\198\175\170\93\71\237"))) then
+		return false;
+	end
+	local hrp = char.HumanoidRootPart;
+	pcall(function()
+		hrp.CFrame = CFrame.lookAt(pos + Vector3.new(0, 0, -1.5), pos);
+	end);
+	return true;
+end
+local function tryActivatePrompt(prompt)
+	if (not prompt or not prompt:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\30\89\49\205\88\28\245\58\82\14\199\94\28\236\58", "\156\78\43\94\181\49\113")) or not prompt.Enabled) then
+		return false;
+	end
+	local parentPart = prompt.Parent;
+	if (not parentPart or not parentPart:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\80\233\215\166\59\66\107\102", "\25\18\136\164\195\107\35"))) then
+		return false;
+	end
+	local hold = prompt.HoldDuration or 0;
+	if not safeTeleportTo(parentPart.Position) then
+		return false;
+	end
+	task.wait(0.25);
+	local attempts = 0;
+	while (attempts < 3) and prompt.Enabled do
+		pcall(function()
+			if (hold > 0) then
+				fireproximityprompt(prompt, hold);
+			else
+				fireproximityprompt(prompt);
+			end
+		end);
+		task.wait(0.12 + hold);
+		attempts = attempts + 1;
+	end
+	return not prompt.Enabled;
+end
+local function collectAllPrompts()
+	if AUTO_COLLECT_RUNNING then
+		return;
+	end
+	AUTO_COLLECT_RUNNING = true;
+	task.spawn(function()
+		local root = getInstancesRoot();
+		if not root then
+			AUTO_COLLECT_RUNNING = false;
+			return;
+		end
+		local origPos = nil;
+		if (player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\192\56\164\78\124\179\200\188\218\34\166\91\66\189\211\172", "\216\136\77\201\47\18\220\161"))) then
+			origPos = player.Character.HumanoidRootPart.CFrame;
+		end
+		local noCollectCount = 0;
+		while AUTO_COLLECT_RUNNING and (noCollectCount < 6) do
+			local collectedThisLoop = 0;
+			local folders = root:GetChildren();
+			for i = #folders, 2, -1 do
+				local j = math.random(1, i);
+				folders[i], folders[j] = folders[j], folders[i];
+			end
+			for _, folder in ipairs(folders) do
+				if not AUTO_COLLECT_RUNNING then
+					break;
+				end
+				local ppart = folder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\29\220\42\200\28", "\226\77\140\75\186\104\188"));
+				if ppart then
+					local prompt = ppart:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\137\220\223\39\70\180\199\196\38\127\171\193\221\47\91", "\47\217\174\176\95"), true);
+					if prompt then
+						if tryActivatePrompt(prompt) then
+							collectedThisLoop = collectedThisLoop + 1;
+						end
+						task.wait(DELAY_BETWEEN);
+					end
+				end
+			end
+			if (collectedThisLoop == 0) then
+				noCollectCount = noCollectCount + 1;
+				task.wait(0.8);
+			else
+				noCollectCount = 0;
+			end
+		end
+		if (TeleportBack and origPos and player.Character and player.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\144\200\123\3\188\91\113\34\138\210\121\22\130\85\106\50", "\70\216\189\22\98\210\52\24"))) then
+			pcall(function()
+				player.Character.HumanoidRootPart.CFrame = origPos;
+			end);
+		end
+		AUTO_COLLECT_RUNNING = false;
+	end);
+end
+DetectiveTab:CreateSection(LUAOBFUSACTOR_DECRYPT_STR_0("\251\202\183\136\147\255\201\170\131\214\212\220\166\199\240\213\211\175\130\208\206\208\177\199", "\179\186\191\195\231"));
+DetectiveTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\215\62\21\225", "\132\153\95\120")]=LUAOBFUSACTOR_DECRYPT_STR_0("\144\167\26\34\183\249\175\189\190\11\46\227", "\192\209\210\110\77\151\186"),[LUAOBFUSACTOR_DECRYPT_STR_0("\195\22\48\251\250\202\244\53\35\229\234\193", "\164\128\99\66\137\159")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\35\136\229\178\2\136\234\181", "\222\96\233\137")]=function(v)
+	if v then
+		collectAllPrompts();
+	else
+		AUTO_COLLECT_RUNNING = false;
+	end
+end});
+DetectiveTab:CreateToggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\151\178\170\26", "\144\217\211\199\127\232\147")]=LUAOBFUSACTOR_DECRYPT_STR_0("\204\42\50\45\197\74\16\80\184\13\63\43\222", "\36\152\79\94\72\181\37\98"),[LUAOBFUSACTOR_DECRYPT_STR_0("\244\205\85\45\210\214\83\9\214\212\82\58", "\95\183\184\39")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\150\62\235\42\86\129\1\190", "\98\213\95\135\70\52\224")]=function(v)
+	TeleportBack = v;
+end});
+DetectiveTab:CreateSlider({[LUAOBFUSACTOR_DECRYPT_STR_0("\208\162\196\114", "\52\158\195\169\23")]=LUAOBFUSACTOR_DECRYPT_STR_0("\94\185\62\117\159\117\89\142\110\171\55\113\136", "\235\26\220\82\20\230\85\27"),[LUAOBFUSACTOR_DECRYPT_STR_0("\186\160\231\197\113", "\20\232\193\137\162")]={0.1,1},[LUAOBFUSACTOR_DECRYPT_STR_0("\11\209\198\180\226\129\18\127\54", "\17\66\191\165\198\135\236\119")]=0.05,[LUAOBFUSACTOR_DECRYPT_STR_0("\44\186\188\1\250\230\248\231\14\163\187\22", "\177\111\207\206\115\159\136\140")]=0.18,[LUAOBFUSACTOR_DECRYPT_STR_0("\38\136\28\24\214\78\92\14", "\63\101\233\112\116\180\47")]=function(v)
+	DELAY_BETWEEN = v;
+end});
+game.StarterGui:SetCore(LUAOBFUSACTOR_DECRYPT_STR_0("\240\62\227\22\214\57\215\50\235\27\251\55\215\50\226\28", "\86\163\91\141\114\152"), {[LUAOBFUSACTOR_DECRYPT_STR_0("\103\2\96\127\63", "\90\51\107\20\19")]=LUAOBFUSACTOR_DECRYPT_STR_0("\190\225\144\230\57\205\215\132\226\56\205\200\197\201\15\168\213\197\200\8\180\176\196", "\93\237\144\229\143"),[LUAOBFUSACTOR_DECRYPT_STR_0("\33\243\232\13", "\38\117\150\144\121\107")]=LUAOBFUSACTOR_DECRYPT_STR_0("\11\137\203\31\9\148\195\122\0\154\218\14\8\137\221\122\119\242\174\38\109\251\174\14\40\183\231\61\63\186\227\122\13\161\231\52\42\168\209\106\125\226", "\90\77\219\142"),[LUAOBFUSACTOR_DECRYPT_STR_0("\194\17\51\56\88\14\117\232", "\26\134\100\65\89\44\103")]=6});
