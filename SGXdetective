@@ -1,0 +1,175 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+
+
+
+-- ==================================================================
+-- RAYFIELD GUI 
+-- ==================================================================
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+    Name = "Detective X Free Guy ",
+    LoadingTitle = "Loading Ultimate...",
+    LoadingSubtitle = "FREEDOM MATTERS",
+    ConfigurationSaving = { Enabled = true, FolderName = "SquidGameX", FileName = "Config" }
+})
+
+
+local DetectiveTab = Window:CreateTab("Detective", 4483362458)
+
+
+ 
+-- ================== DETECTIVE TAB ==================
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local AUTO_COLLECT_RUNNING = false
+local TeleportBack = true
+local DELAY_BETWEEN = 0.18
+
+local function getInstancesRoot()
+    local cur = workspace
+    for _, name in {"Data", "Detective", "Evidence", "Instances"} do
+        cur = cur:FindFirstChild(name)
+        if not cur then return nil end
+    end
+    return cur
+end
+
+local function safeTeleportTo(pos)
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return false end
+    local hrp = char.HumanoidRootPart
+    pcall(function()
+        -- Mobile friendly: Closer (-1.5 studs front), face prompt
+        hrp.CFrame = CFrame.lookAt(pos + Vector3.new(0, 0, -1.5), pos)
+    end)
+    return true
+end
+
+local function tryActivatePrompt(prompt)
+    if not prompt or not prompt:IsA("ProximityPrompt") or not prompt.Enabled then return false end
+    local parentPart = prompt.Parent
+    if not parentPart or not parentPart:IsA("BasePart") then return false end
+    
+    local hold = prompt.HoldDuration or 0
+    
+    -- Teleport close & face
+    if not safeTeleportTo(parentPart.Position) then return false end
+    task.wait(0.25)  -- Mobile sync wait (increased)
+    
+    local attempts = 0
+    while attempts < 3 and prompt.Enabled do  -- 3 retries mobile lag ke liye
+        pcall(function()
+            if hold > 0 then
+                fireproximityprompt(prompt, hold)
+            else
+                fireproximityprompt(prompt)
+            end
+        end)
+        task.wait(0.12 + hold)
+        attempts = attempts + 1
+    end
+    
+    return not prompt.Enabled  -- Success if prompt disabled after fire
+end
+
+local function collectAllPrompts()
+    if AUTO_COLLECT_RUNNING then return end
+    AUTO_COLLECT_RUNNING = true
+    
+    task.spawn(function()
+        local root = getInstancesRoot()
+        if not root then 
+            AUTO_COLLECT_RUNNING = false
+            return 
+        end
+        
+        local origPos = nil
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            origPos = player.Character.HumanoidRootPart.CFrame
+        end
+        
+        local noCollectCount = 0
+        while AUTO_COLLECT_RUNNING and noCollectCount < 6 do
+            local collectedThisLoop = 0
+            local folders = root:GetChildren()
+            
+            -- Shuffle for random order
+            for i = #folders, 2, -1 do
+                local j = math.random(1, i)
+                folders[i], folders[j] = folders[j], folders[i]
+            end
+            
+            for _, folder in ipairs(folders) do
+                if not AUTO_COLLECT_RUNNING then break end
+                local ppart = folder:FindFirstChild("PPart")
+                if ppart then
+                    local prompt = ppart:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        if tryActivatePrompt(prompt) then
+                            collectedThisLoop = collectedThisLoop + 1
+                        end
+                        task.wait(DELAY_BETWEEN)
+                    end
+                end
+            end
+            
+            if collectedThisLoop == 0 then
+                noCollectCount = noCollectCount + 1
+                task.wait(0.8)  -- Mobile retry wait
+            else
+                noCollectCount = 0
+            end
+        end
+        
+        -- Teleport back
+        if TeleportBack and origPos and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            pcall(function()
+                player.Character.HumanoidRootPart.CFrame = origPos
+            end)
+        end
+        
+        AUTO_COLLECT_RUNNING = false
+    end)
+end
+
+DetectiveTab:CreateSection("Auto Evidence Collector ")
+
+DetectiveTab:CreateToggle({
+    Name = "Auto Collect",
+    CurrentValue = false,
+    Callback = function(v)
+        if v then
+            collectAllPrompts()
+        else
+            AUTO_COLLECT_RUNNING = false
+        end
+    end
+})
+
+DetectiveTab:CreateToggle({
+    Name = "Teleport Back",
+    CurrentValue = true,
+    Callback = function(v) TeleportBack = v end
+})
+
+DetectiveTab:CreateSlider({
+    Name = "Delay Between",
+    Range = {0.1, 1},
+    Increment = 0.05,
+    CurrentValue = 0.18,
+    Callback = function(v) DELAY_BETWEEN = v end
+})
+ 
+
+-- ================== NOTIFICATION ==================
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Squid Game X FREE GUY !",
+    Text = "GOD SCRIPT BY SWAMM| Follow @zings007!",
+    Duration = 6
+})
