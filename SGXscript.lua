@@ -1,34 +1,4 @@
 --FUCK OFF NIGGA ---  Its SWAMMM :)
 
---[[
-
-http://loomobf.567099.xyz/
-
-▓▓      
-▓▓░     
-▓▓░     
-▓▓░     
-▓▓▓▓▓▓  
- ░░░░░  
-
-  ▓▓▓▓▓  
- ▓▓   ▓▓░ 
- ▓▓   ▓▓░ 
- ▓▓   ▓▓░ 
-  ▓▓▓▓▓  ░
-
-  ▓▓▓▓▓  
- ▓▓   ▓▓░ 
- ▓▓   ▓▓░ 
- ▓▓   ▓▓░ 
-  ▓▓▓▓▓  ░
-
- ▓▓   ▓▓░
- ▓▓▓ ▓▓▓░
- ▓▓ ▓ ▓▓░
- ▓▓   ▓▓░
- ▓▓   ▓▓░
---]]
-
 
 return(function(...)local o={`z1hKEDCq`..`sfO=`,(`zfhYEX4R`..`cWlZzXe2`)..`+6==`,(`sWzOhW2O`..`cIaps9GH`)..`ge2=`,`sXeYga==`,`EfCR+DwY`..`hIGHQHtF`,(((((((((((((((((((((((`gxCY+xwm`..`BZN1gJGY`)..`BrcqcWlp`)..`E1h3zJ5n`)..`sfMYzXMY`)..`BrG8svN3`)..`cfeLsvYO`)..`Pv/fGXhl`)..`zH23w9SY`)..`wXwDErEM`)..`w3SfEXh2`)..`zrS3GrE6`)..`EHIowZNZ`)..`EJ+8zHQf`)..`G924wrho`)..`GXS6EXSO`)..`EfE6EHT6`)..`zHhnEfS3`)..`znc2GWQp`)..`G9tlw3kp`)..`EZNLyJGn`)..`+rI6cne2`)..`zXNozopL`)..`sfNKcrhq`)..`s7MRcXS=`,`JpN1E6==`,`srhD+x58`..`yx2=`,`+WGlsW6=`,`EfNZsDhY`..`gXMI`,`zx5PhSzL`..`QnGYzSLl`,`JpNRzXO=`,`zJ5ZsDT=`,`zYMTPhzn`..`s2EfkWl1`,`+fhYsXhY`..`EJClEr4I`,(`EnebgHIM`..`zDlMQkG8`)..`Q0==`,`EJG3zJ5Y`,`gxh1zQ==`,`cxI6zQ==`,`sWNlzxGY`..`+rIKz6==`,`zfeLzQ==`,(`krTOyxlG`..`g2G6Phzr`)..`y9k=`,(`cYIPGDCH`..`zhtFXehj`)..`Ga==`,`srcRy9e8`..`+WCz+ezR`,`ED5IEJCI`,`JpNqsrCI`..`ya==`,`zWhocX+=`,`+rh3cXpI`,`sWNlza==`,`vxCY+ScI`..`ca==`,`cXM6EXGF`}UA=true sA=false mA=true CA=true PA=true XA=true wA=true FA=true fA=false WA=true aA=false YA=false rA=true yA=false VA=false uA=true TA=true eA=false HA=false zA=true BA=true EA=false JA=true gA=true SA=true nA=false IA=false tA=true LA=false OA=true QA=false kA=false oA=true v=true i=false N=true M=true x=true A=false l=false D=true R=false p=false G=false d=true b=true j=false h=true c=true q=true Z=`Uw7Kt1C#y&!zD~wme#L55S`K=`rlXZC#yeE0b`U=`#sPgfp%z?66Gqs3$YmC&r`s=`C5w;pR>Q5em3kW1Eia7F^jItV`m=`9*HWeoGkYQabunj;2DT#mdRhHKPyfW6`C=`&h3BQ$XglSyCet*0EwKWq`P=`is3S%@u<yCq`X=`g0e?j#YNc|U^HXk<HF1o>6Bdi<73M*nH`w=`$yql37DUCaaL935W1h`F=`3AJtMv5ZbMP~rnt`f=`uS;*J7Z5&SHeO`W=`w~a@#xAXc2ogYm&|PXNYe8Fy?rWw2znM`a=`KoNKh*^&6lI|WY!`Y=`KDKt>TeV6l0|vwUI>%QrSWu`r=`yoHx!;SU^PPU<D5P7QkJAO$L0x@5hS`y=`Sfj^B0d82u*r<dg4kjdnP`V=`N&50V|7lT1|bIMJgE;Q0|T`u=`lx0bL7?~7JBQe`T=`?eS#BrxNQ9tK5454Vh$7hVAzMs8%R>^`e=`ul*AKUyi7^`H=`X7auauAKsXcb4~`z=`CRxNaL;p74JT3T*z`B=`7FPNQ6<5hOay9@KvBP&;h@@!qH!GEK5`E=`>$p~H6ZSZ0Y<1`J=`U^1kt%xTABQ28a!uT`g=`a2lhbQKGVn#ZpC@fU*`S=`sV<CUQkcbSH4e~4`n=`JV?FlHC%t~ET<6Uxr`I=`WFH7!CPTtTVD#<y`t=`l?Z!jyUlG#qJG;Q;nCaXK0InTa3<iTk3`L=`RCveRT6x7fV!%LBR4qi>GrP`O=`?pjV9%*|e@xGTP#qegxiu3b0dX`Q=`@OCEX08n$6*m!3ljh<2d1|CmBVhpt%X`local function k(k)return o[k+24777]end for k,Q in ipairs({{1,31},{1,28},{29,31}})do while Q[1]<Q[2]do o[Q[1]],o[Q[2]],Q[1],Q[2]=o[Q[2]],o[Q[1]],Q[1]+1,Q[2]-1 end end do local k=string.len local Q=math.floor local O={[`8`]=47,s=27,D=55,X=22,K=46,o=34,c=29,u=59,A=40,F=43,[`6`]=48,t=1,R=44,[`5`]=9,S=4,N=61,f=54,g=26,J=23,[`7`]=2,B=11,E=24,[`2`]=36,[`/`]=60,[`1`]=39,I=37,L=45,w=12,C=17,[`+`]=28,i=10,G=13,Y=52,k=20,Q=16,l=33,d=63,y=30,[`0`]=32,p=53,[`3`]=51,b=42,h=21,n=35,U=62,v=18,[`4`]=49,r=38,x=7,M=57,V=31,q=41,Z=50,e=5,[`9`]=3,j=15,z=25,P=14,H=19,T=8,W=6,m=58,a=0,O=56}local L=string.char local t=o local I=table.concat local n=type local S=table.insert local g=string.sub for o=1,#t,1 do local J=t[o]if n(J)==`string`then local n=k(J)local E={}local B=1 local z=0 local H=0 while B<=n do local o=g(J,B,B)local k=O[o]if k then z=z+k*64^(3-H)H=H+1 if H==4 then H=0 local o=Q(z/65536)local k=Q((z%65536)/256)local O=z%256 S(E,L(o,k,O))z=0 end elseif o==`=`then S(E,L(Q(z/65536)))if B>=n or g(J,B+1,B+1)~=`=`then S(E,L(Q((z%65536)/256)))end break end B=B+1 end t[o]=I(E)end end end return(function(o,O,L,t,I,n,S,z,y,Y,B,u,g,H,Q,J,V,T,E,e,r)y,g,E,u,J,r,z,T,H,V,Q,Y,e,B=function(o,k)local O=z(k)local L=function(L,t)return Q(o,{L,t},k,O)end return L end,{},function()B=1+B J[B]=1 return B end,function(o,k)local O=z(k)local L=function()return Q(o,{},k,O)end return L end,{},function(o,k)local O=z(k)local L=function(L,t,I,n)return Q(o,{L,t,I,n},k,O)end return L end,function(o)for k=1,#o,1 do J[o[k]]=1+J[o[k]]end if L then local Q=L(true)local O=I(Q)O[k(-24754)],O[k(-24773)],O[k(-24768)]=o,H,function()return 320504 end return Q else return t({},{[k(-24773)]=H,[k(-24754)]=o,[k(-24768)]=function()return 320504 end})end end,function(o,k)local O=z(k)local L=function(...)return Q(o,{...},k,O)end return L end,function(o)local k,Q=1,o[1]while Q do J[Q],k=J[Q]-1,k+1 if J[Q]==0 then J[Q],g[Q]=nil,nil end Q=o[k]end end,function(o,k)local O=z(k)local L=function(L,t,I)return Q(o,{L,t,I},k,O)end return L end,function(Q,L,t,I)local z,E,W,e,a,H,J,T,f,g,F,B,S while Q do if Q<8318347 then if Q<3457174 then if Q<1306257 then if Q<567743 then if Q<529590 then H=k(-24760)E=k(-24763)J=o[E]e=o[H]B=Q Q=e and 3139958 or 11280122 z=e else Q=true Q=Q and 4827830 or 6172182 end else if Q<958289 then g=L[1]Q={g(g)}S={O(Q)}Q=o[k(-24758)]else H=Y(798720,{})Q=V(2340667,{})S=Q(H)Q=11136641 end end else if Q<2800344 then if Q<2723679 then g=L[1]Q={g(g)}S={O(Q)}Q=o[k(-24757)]else F=not f W=W+T S=W<=a S=F and S F=W>=a F=f and F S=F or S F=12699490 Q=S and F S=6831685 Q=Q or S end else E=J(z)Q=B S=E Q=E and 16244756 or 9765753 end end else if Q<6812995 then if Q<4915698 then if Q<4651646 then g=y(15193506,{})J=true E=k(-24753)S=k(-24754)Q={[S]=g}S=k(-24772)g=Q Q=o[S]S=Q(J)J=S S=o[E]E=k(-24765)Q=S[E]S=Q(J,g)S=1 Q=J+S g=nil J=nil E=Q E=nil Q=o[k(-24756)]S={}else Q=533071 end else Q=o[k(-24766)]S={}end else if Q<7377957 then if Q<6854788 then H=nil E=nil z=nil e=nil Q=15801011 J=nil B=nil else E=not g S=E Q=16267984 end else J=k(-24747)g=o[J]Q=g and 9909618 or 9861563 S=g end end end else if Q<13770722 then if Q<11240776 then if Q<9888900 then if Q<9800692 then E=k(-24767)J=o[E]S=J Q=16244756 else Q=o[k(-24769)]S={S}end else if Q<10388625 then E=k(-24761)B=k(-24747)J=o[E]Q=9861563 z=o[B]E=J(z)J=k(-24748)g=E==J S=g else S=1 Q={}T=k(-24776)a=o[T]H=Q T=k(-24762)Q=2749317 W=a[T]a=W W=1 T=W W=0 f=T<W W=S-T end end else if Q<13139613 then if Q<11339393 then H=k(-24751)e=o[H]z=e Q=3139958 else F=W Q={F,H}H[F]=Q Q=2749317 F=nil end else S=k(-24771)J=u(8030199,{})Q=o[S]E={Q(J)}S=E[1]g=E[2]J=S E=not J Q=E and 16267984 or 7096864 S=E end end else if Q<16084299 then if Q<15345211 then if Q<14946460 then B=k(-24750)g=L Q=Y(16192780,{})S=Q()S=k(-24760)z=k(-24774)E=k(-24759)Q=o[S]J=o[E]B=J[B]E={B(J,z)}S=Q(O(E))Q=S()S={}Q=o[k(-24775)]else Q=533071 end else g=nil S={}Q=o[k(-24746)]end else if Q<16258884 then if Q<16202393 then Q=V(13512766,{})S=Q()g=S Q=g and 457660 or 15801011 else z=k(-24770)J=S Q=r(4405609,{})E=Q S=o[z]B=k(-24770)z=k(-24755)Q=S[z]S=Q(E)z=S S=o[B]B=k(-24752)Q=S[B]e={Q(z)}S=e[1]B=e[2]e=S Q=not e Q=Q and 985919 or 11136641 end else Q=o[k(-24764)]S={S}end end end end end Q=#I return O(S)end,function(o,k)local O=z(k)local L=function(L)return Q(o,{L},k,O)end return L end,function(o)J[o]=J[o]-1 if J[o]==0 then J[o],g[o]=nil,nil end end,0 return(T(13772814,{}))(O(S))end)(getfenv and getfenv()or _ENV,unpack or table[k(-24749)],newproxy,setmetatable,getmetatable,select,{...})end)(...)
