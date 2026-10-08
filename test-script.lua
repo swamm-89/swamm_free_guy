@@ -1,5 +1,4 @@
 
-
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local RunService = game:GetService("RunService")
@@ -361,6 +360,212 @@ DetectiveTab:CreateToggle({
     end
 })
 
+
+
+-- ================== AUTO FARM - INFINITE LOOP VERSION ==================
+local AUTO_FARM_RUNNING = false
+
+-- ================== SETTINGS ==================
+local HOLD_TIME = 2.0
+local MAX_ATTEMPTS = 3
+local MAX_EVIDENCE = 8
+local WAIT_AFTER_COLLECT = 60
+
+-- Auto Walk Settings
+local StartTeleportPos = Vector3.new(8073.37, 88.97, 3679.23)
+local MidTeleportPos   = Vector3.new(-1992.31, -859.86, 15906.73)
+
+local waypoints = {
+    Vector3.new(8073.96, 88.86, 3650.73),
+    Vector3.new(8161.80, 100.84, 3650.35),
+    Vector3.new(8161.49, 100.64, 3472.72),
+    Vector3.new(-2063.78, -839.86, 15972.25),
+    Vector3.new(-2124.64, -819.91, 15898.50),
+    Vector3.new(-2171.05, -819.02, 15829.92),
+    Vector3.new(-2307.93, -765.76, 15685.34),
+    Vector3.new(-2314.12, -787.01, 15562.18),
+    Vector3.new(-2496.66, -786.53, 15496.33),
+    Vector3.new(-2614.94, -782.07, 15233.47),
+    Vector3.new(-2688.85, -787.00, 15219.22),
+    Vector3.new(-2826.85, -783.00, 15337.36),
+    Vector3.new(-2843.02, -786.00, 15511.34)
+}
+
+-- ================== AUTO COLLECT WITH FIXED TELEPORT BACK ==================
+local function getInstancesRoot()
+    local cur = workspace
+    for _, name in {"Data", "Detective", "Evidence", "Instances"} do
+        cur = cur:FindFirstChild(name)
+        if not cur then return nil end
+    end
+    return cur
+end
+
+local function collectEvidence()
+    local root = getInstancesRoot()
+    if not root then return end
+
+    local returnPosition = nil
+    local collected = 0
+
+    for _, folder in ipairs(root:GetChildren()) do
+        if not AUTO_FARM_RUNNING then break end
+
+        local ppart = folder:FindFirstChild("PPart")
+        if ppart then
+            local prompt = ppart:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt and prompt.Enabled then
+                
+                if not returnPosition then
+                    local char = player.Character
+                    if char and char:FindFirstChild("HumanoidRootPart") then
+                        returnPosition = char.HumanoidRootPart.CFrame
+                    end
+                end
+
+                local success = false
+                for attempt = 1, MAX_ATTEMPTS do
+                    if not AUTO_FARM_RUNNING then break end
+                    
+                    local char = player.Character
+                    if char and char:FindFirstChild("HumanoidRootPart") then
+                        char.HumanoidRootPart.CFrame = CFrame.new(prompt.Parent.Position + Vector3.new(0, 4, 0))
+                    end
+                    
+                    task.wait(0.2)
+
+                    pcall(function()
+                        fireproximityprompt(prompt, prompt.HoldDuration or 0)
+                    end)
+
+                    task.wait(HOLD_TIME)
+
+                    if not prompt.Enabled or prompt.Parent == nil then
+                        success = true
+                        break
+                    end
+                end
+
+                if success then
+                    collected += 1
+                    if collected >= MAX_EVIDENCE then
+                        break
+                    end
+                end
+            end
+        end
+    end
+
+    -- Teleport Back
+    if returnPosition then
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = returnPosition
+            task.wait(0.8)
+        end
+    end
+
+    print("Collect Finished | Total: " .. collected)
+end
+
+-- ================== AUTO SUBMIT ==================
+local function submitEvidence()
+    local boat = workspace.Data.Detective.Boat and workspace.Data.Detective.Boat["Speedy Bowrider"]
+    if not boat then return end
+
+    local prompt = boat:FindFirstChild("RearPart", true) 
+        and boat.RearPart:FindFirstChild("Attachment", true) 
+        and boat.RearPart.Attachment:FindFirstChild("ProximityPrompt")
+
+    if not prompt then return end
+
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+    local hrp = char.HumanoidRootPart
+    local origCFrame = hrp.CFrame
+
+    prompt.MaxActivationDistance = 50
+    prompt.Enabled = true
+    prompt.RequiresLineOfSight = false
+    prompt.HoldDuration = 0.5
+
+    hrp.CFrame = CFrame.new(prompt.Parent.Parent.Position + Vector3.new(0, 3, 0))
+    task.wait(0.4)
+
+    pcall(function()
+        fireproximityprompt(prompt, 0.5)
+    end)
+
+    task.wait(0.8)
+    hrp.CFrame = origCFrame
+end
+
+-- ================== AUTO WALK ==================
+local function startAutoWalk()
+    local hum = player.Character and player.Character:FindFirstChild("Humanoid")
+    if not hum then return end
+
+    pcall(function()
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(StartTeleportPos + Vector3.new(0, 5, 0))
+    end)
+    task.wait(1.5)
+
+    for i = 1, #waypoints do
+        if not AUTO_FARM_RUNNING then break end
+
+        hum:MoveTo(waypoints[i])
+        hum.MoveToFinished:Wait(15)
+
+        if i == 3 then
+            pcall(function()
+                player.Character.HumanoidRootPart.CFrame = CFrame.new(MidTeleportPos + Vector3.new(0, 5, 0))
+            end)
+            task.wait(1.8)
+        end
+
+        task.wait(0.5)
+    end
+end
+
+-- ================== MAIN LOOP ==================
+local function autoFarmLoop()
+    while AUTO_FARM_RUNNING do
+        print("🔄 Starting new Auto Farm Cycle...")
+
+        collectEvidence()                    -- 1. Collect + Teleport Back
+        task.wait(WAIT_AFTER_COLLECT)        -- 2. 60 sec wait
+
+        if not AUTO_FARM_RUNNING then break end
+        startAutoWalk()                      -- 3. Auto Walk
+
+        if not AUTO_FARM_RUNNING then break end
+        submitEvidence()                     -- 4. Submit
+
+        print("✅ Cycle Completed | Starting next cycle in 2 seconds...")
+        task.wait(2)   -- Chhota delay next cycle se pehle
+    end
+
+    print("AUTO FARM Loop Stopped")
+end
+
+-- ================== GUI ==================
+DetectiveTab:CreateSection("🚀 AUTO FARM - LOOP MODE")
+
+DetectiveTab:CreateToggle({
+    Name = "AUTO FARM LOOP (Infinite Cycle)",
+    CurrentValue = false,
+    Callback = function(v)
+        if v then
+            AUTO_FARM_RUNNING = true
+            print("🚀 AUTO FARM LOOP Started")
+            task.spawn(autoFarmLoop)        -- Loop ko background mein chala rahe hain
+        else
+            AUTO_FARM_RUNNING = false
+            print("🛑 AUTO FARM LOOP Stopped")
+        end
+    end
+})
 
 
 -- ================== TELEPORT TAB ==================
