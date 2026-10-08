@@ -1,127 +1,3 @@
---     BEAUTIFUL RED ♥️ SPLASH SCREEN - FINAL CLEAN VERSION
---     No Close Button | Auto 5 Sec Fade Out | Super Beautiful Fonts & Colors
--- ====================================================
-
-local TweenService = game:GetService("TweenService")
-
-task.wait(0.4)
-
--- ====================================================
--- Create ScreenGui (CoreGui mein for full screen effect)
--- ====================================================
-local splashGui = Instance.new("ScreenGui")
-splashGui.Name = "LeoXBeautifulSplash"
-splashGui.IgnoreGuiInset = true
-splashGui.ResetOnSpawn = false
-splashGui.Parent = game:GetService("CoreGui")
-
--- Main Frame - Ultra beautiful dark romantic red base
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(1, 0, 1, 0)
-mainFrame.BackgroundColor3 = Color3.fromRGB(25, 0, 8)   -- deep luxurious red-black
-mainFrame.BackgroundTransparency = 0.35
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = splashGui
-
--- Premium Gradient - red rose to soft crimson glow
-local uiGradient = Instance.new("UIGradient")
-uiGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0,   Color3.fromRGB(190, 30, 70)),   -- rich rose
-    ColorSequenceKeypoint.new(0.4, Color3.fromRGB(255, 90, 130)),  -- vibrant heart red
-    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(220, 60, 100)),  -- warm crimson
-    ColorSequenceKeypoint.new(1,   Color3.fromRGB(190, 30, 70))
-}
-uiGradient.Rotation = 120
-uiGradient.Transparency = NumberSequence.new(0.3)
-uiGradient.Parent = mainFrame
-
--- Elegant glow border
-local uiStroke = Instance.new("UIStroke")
-uiStroke.Color = Color3.fromRGB(255, 140, 180)
-uiStroke.Transparency = 0.45
-uiStroke.Thickness = 5.5
-uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-uiStroke.Parent = mainFrame
-
--- Super smooth rounded corners
-local uiCorner = Instance.new("UICorner")
-uiCorner.CornerRadius = UDim.new(0, 32)
-uiCorner.Parent = mainFrame
-
--- Big Beautiful Title - LeoX ♥️
-local title = Instance.new("TextLabel")
-title.Size = UDim2.new(0.92, 0, 0.42, 0)
-title.Position = UDim2.new(0.04, 0, 0.18, 0)
-title.BackgroundTransparency = 1
-title.Text = "M3GUN ♥️"
-title.TextColor3 = Color3.fromRGB(255, 160, 190)   -- soft glowing pink-red
-title.TextScaled = true
-title.Font = Enum.Font.FredokaOne                 -- rounded, cute & premium
-title.TextStrokeTransparency = 0.55
-title.TextStrokeColor3 = Color3.fromRGB(180, 20, 70)
-title.Parent = mainFrame
-
--- Elegant Subtitle
-local subtitle = Instance.new("TextLabel")
-subtitle.Size = UDim2.new(0.82, 0, 0.14, 0)
-subtitle.Position = UDim2.new(0.09, 0, 0.54, 0)
-subtitle.BackgroundTransparency = 1
-subtitle.Text = "Squid Game X • Free Guy"
-subtitle.TextColor3 = Color3.fromRGB(255, 210, 230)
-subtitle.TextScaled = true
-subtitle.Font = Enum.Font.GothamBlack             -- sharp & luxurious
-subtitle.TextStrokeTransparency = 0.75
-subtitle.Parent = mainFrame
-
--- Heart-touching tagline
-local loveTag = Instance.new("TextLabel")
-loveTag.Size = UDim2.new(0.7, 0, 0.1, 0)
-loveTag.Position = UDim2.new(0.15, 0, 0.71, 0)
-loveTag.BackgroundTransparency = 1
-loveTag.Text = "Vision By SWAMM 💫♥️"
-loveTag.TextColor3 = Color3.fromRGB(255, 190, 210)
-loveTag.TextScaled = true
-loveTag.Font = Enum.Font.FredokaOne
-loveTag.TextStrokeTransparency = 0.8
-loveTag.Parent = mainFrame
-
--- ====================================================
--- ULTRA BEAUTIFUL ANIMATIONS
--- ====================================================
-
-local tweenFast = TweenInfo.new(1.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
-local tweenPulse = TweenInfo.new(2.4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true)
-
--- Fade + scale in
-TweenService:Create(mainFrame, tweenFast, {BackgroundTransparency = 0.35}):Play()
-TweenService:Create(title, tweenFast, {TextTransparency = 0}):Play()
-TweenService:Create(subtitle, tweenFast, {TextTransparency = 0}):Play()
-TweenService:Create(loveTag, tweenFast, {TextTransparency = 0}):Play()
-
--- Romantic heartbeat pulse on title
-TweenService:Create(title, tweenPulse, {
-    TextTransparency = 0.08,
-    Rotation = 2.5,
-    Size = UDim2.new(0.95, 0, 0.44, 0)
-}):Play()
-
--- ====================================================
--- AUTO FADE OUT AFTER 5 SECONDS - No Button
--- ====================================================
-task.delay(5, function()
-    local fadeOut = TweenInfo.new(1.4, Enum.EasingStyle.Quint, Enum.EasingDirection.In)
-    
-    TweenService:Create(mainFrame, fadeOut, {BackgroundTransparency = 1}):Play()
-    TweenService:Create(title, fadeOut, {TextTransparency = 1}):Play()
-    TweenService:Create(subtitle, fadeOut, {TextTransparency = 1}):Play()
-    TweenService:Create(loveTag, fadeOut, {TextTransparency = 1}):Play()
-    
-    task.delay(1.5, function()
-        splashGui:Destroy()
-        print("Beautiful LeoX ♥️ Splash faded out perfectly!")
-        -- Yahan se tumhara Rayfield ya baaki script load kar sakte ho
-    end)
-end)
 
 
 local Players = game:GetService("Players")
@@ -131,6 +7,7 @@ local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local CoreGui = game:GetService("CoreGui")
+
 
 
 -- ==================================================================
@@ -156,18 +33,6 @@ local Window = Rayfield:CreateWindow({
     
     Theme = "Ocean"  
 })
-
-
-
-
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HttpService = game:GetService("HttpService")
-local CoreGui = game:GetService("CoreGui")
-
 
 
 
@@ -2387,7 +2252,3 @@ game.StarterGui:SetCore("SendNotification", {
     Text = "GOD SCRIPT BY SWAMM| Follow @zigs_009!",
     Duration = 10
 })
-
-
-
-
