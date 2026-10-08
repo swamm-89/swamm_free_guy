@@ -38,6 +38,7 @@ local Window = Rayfield:CreateWindow({
 local PlayerTab = Window:CreateTab("Player", 4483362458)
 local GuardTab = Window:CreateTab("Guard", 4483362458)
 local DetectiveTab = Window:CreateTab("Detective", 4483362458)
+local TeleportTab = Window:CreateTab("Teleport", 4483362458)
 
 
 
@@ -362,6 +363,56 @@ DetectiveTab:CreateToggle({
 
 
 
+-- ================== TELEPORT TAB ==================
+-- NORMAL LOCATIONS
+local normalLocations = {
+    ["Sniper Room"] = CFrame.new(-12141.4541, -730.498535, -2957.66406, -0.180338055, -2.98282621e-09, 0.98360467, -6.66433975e-09, 1, 1.81067872e-09, -0.98360467, -6.22854168e-09, -0.180338055),
+    ["Lobby"] = CFrame.new(8037.88623, 89.01297, 3716.98755, 0.989010394, 2.00211296e-08, -0.147845939, -3.05174623e-08, 1, -6.87266564e-08, 0.147845939, 7.24832603e-08, 0.989010394),
+    ["Coffin Room"] = CFrame.new(8115.72949, 81.5116348, 3563.58252, 0.999861181, 4.8363944e-09, 0.0166631918, -4.61536453e-09, 1, -1.33030325e-08, -0.0166631918, 1.32242786e-08, 0.999861181),
+    ["Kitchen"] = CFrame.new(8196.88086, 100.611847, 3641.15967, 0.0568975545, -1.63478759e-08, -0.998380005, 8.93332341e-09, 1, -1.58652931e-08, 0.998380005, -8.01615485e-09, 0.0568975545),
+    ["Island"] = CFrame.new(-2855.55933, -785.993164, 15511.7393, -0.419365525, 3.11538741e-08, 0.907817483, -2.97939575e-08, 1, -4.80806293e-08, -0.907817483, -4.72108326e-08, -0.419365525)
+}
+
+for name, cframe in pairs(normalLocations) do
+    TeleportTab:CreateButton({ 
+        Name = "Teleport to " .. name,
+        Callback = function()
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                player.Character.HumanoidRootPart.CFrame = cframe
+            end
+        end
+    })
+end
+
+-- GAMEMODE SECTION
+TeleportTab:CreateSection("Gamemode")
+
+local gamemodes = {
+    ["Red Light Green Light"] = CFrame.new(-12203.375, -790.695312, -3007.31567),
+    ["PENTATHLON"] = CFrame.new(-2750.47, 95.31, -4947.26),
+    ["Mingle"] = CFrame.new(-821.12, 35.15, 1555.95),
+    ["Rock Paper Scissors"] = CFrame.new(1283.39, 286.68, 588.87),
+    ["GLASS GAME"] = CFrame.new(1278.72, 101.70, -1087.84),
+    ["Dinner"] = CFrame.new(8070.41, 56.10, 23481.91),
+
+    ["Sky Squid Platform 1"] = CFrame.new(510.28, 287.33, 76.86),
+    ["Sky Squid Platform 2"] = CFrame.new(498.37, 287.29, 158.14),
+    ["Sky Squid Platform 3"] = CFrame.new(495.70, 287.35, 258.99),
+    ["Honeycomb"] = CFrame.new(48.0107231, 26.2989159, 3139.28125, 0.577934206, -3.13240811e-08, 0.816083372, 1.06247038e-08, 1, 3.08592263e-08, -0.816083372, -9.16395759e-09, 0.577934206),
+    ["Hide n Seek"] = CFrame.new(-792.37, 8.42, 339.92),
+    ["Jump Rope"] = CFrame.new(94.34, 119.73, -4.28)
+}
+
+for name, cframe in pairs(gamemodes) do
+    TeleportTab:CreateButton({ 
+        Name = name,
+        Callback = function()
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                player.Character.HumanoidRootPart.CFrame = cframe
+            end
+        end
+    })
+end
 
 
 
