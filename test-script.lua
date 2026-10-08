@@ -58,6 +58,165 @@ DetectiveTab:CreateButton({
 })
 
 
+--== ULTIMATE Executor Script + Rayfield (SINGLE TOGGLE) ==--
+-- Mobile Friendly | All features merged | One toggle only
+
+DetectiveTab:CreateToggle({
+    Name = "Cutseen Remover",
+    CurrentValue = false,
+    Callback = function(v)
+        scriptEnabled = v
+        warn("🟢 SCRIPT ENABLED:", v)
+    end
+})
+
+-------------------------------------------------
+-- SERVICES
+-------------------------------------------------
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player.PlayerGui
+local playerScripts = player.PlayerScripts
+
+-------------------------------------------------
+-- PART 1: SINGLE METAMETHOD HOOK (ALL BLOCKS)
+-------------------------------------------------
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+local oldIndex = mt.__index
+
+setreadonly(mt, false)
+
+-- FireServer / Play / Toggle / Cutscene block
+mt.__namecall = newcclosure(function(self, ...)
+    if not scriptEnabled then
+        return oldNamecall(self, ...)
+    end
+
+    local method = getnamecallmethod()
+    local name = self.Name
+    local path = tostring(self):lower()
+
+    -- 🚫 TELEPORT FireServer BLOCK
+    if method == "FireServer"
+        and name == "RequestTeleportAsync"
+        and self.Parent
+        and self.Parent.Name == "Remotes" then
+        warn("🚫 Teleport FireServer BLOCKED")
+        return
+    end
+
+    -- 🎬 CUTSCENE BLOCK
+    if (name == "SafeCutscene" or path:find("cutscene") or path:find("ending"))
+        and (method == "Play" or method:find("Ending") or method:find("Skippable")) then
+        warn("🎬 Cutscene BLOCKED:", method)
+        return
+    end
+
+    -- 🚪 GameHandler Door Toggle
+    if name == "GameHandler"
+        and method == "Toggle"
+        and tostring(...):lower():find("door") then
+        warn("🚪 Door Toggle BLOCKED")
+        return
+    end
+
+    return oldNamecall(self, ...)
+end)
+
+-- 🚫 TELEPORT InvokeServer BLOCK
+mt.__index = newcclosure(function(self, key)
+    if scriptEnabled
+        and key == "InvokeServer"
+        and self.Name == "RequestTeleportAsync"
+        and self.Parent
+        and self.Parent.Name == "Remotes" then
+        warn("🚫 Teleport InvokeServer BLOCKED")
+        return function() return nil end
+    end
+    return oldIndex(self, key)
+end)
+
+setreadonly(mt, true)
+print("🔒 Advanced Metamethod Hook Applied")
+
+-------------------------------------------------
+-- PART 2: AUTO RESPAWN
+-------------------------------------------------
+local function onCharacterAdded(char)
+    if not scriptEnabled then return end
+
+    local hum = char:WaitForChild("Humanoid", 5)
+    if hum then
+        hum.Died:Connect(function()
+            if scriptEnabled then
+                warn("💀 Death detected → Respawn")
+                player:LoadCharacter()
+            end
+        end)
+    end
+end
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+player.CharacterAdded:Connect(onCharacterAdded)
+
+-------------------------------------------------
+-- PART 3: DISABLE GameModeSystem
+-------------------------------------------------
+task.spawn(function()
+    pcall(function()
+        local client = playerScripts:WaitForChild("Client", 15)
+        local handler = client:WaitForChild("GameHandler", 15)
+        local mode = handler:WaitForChild("GameModeSystem", 10)
+
+        if mode and mode:IsA("LocalScript") then
+            mode.Disabled = true
+            warn("❌ GameModeSystem DISABLED")
+        end
+    end)
+end)
+
+-------------------------------------------------
+-- PART 4: GUI + SCRIPT CLEANER
+-------------------------------------------------
+local function clean()
+    if not scriptEnabled then return end
+
+    -- GUI cleaner
+    for _, gui in ipairs(playerGui:GetChildren()) do
+        local n = gui.Name:lower()
+        if gui:IsA("ScreenGui") and (
+            n:find("death") or n:find("cutscene") or n:find("black")
+            or n:find("fade") or n:find("end") or n:find("tele")
+        ) then
+            gui:Destroy()
+        end
+    end
+
+    -- PlayerScripts cleaner
+    for _, s in ipairs(playerScripts:GetDescendants()) do
+        if s:IsA("LocalScript") and not s.Disabled then
+            local ln = s.Name:lower()
+            if ln:find("cutscene") or ln:find("gamemode")
+               or ln:find("handler") or ln:find("system") then
+                s.Disabled = true
+            end
+        end
+    end
+end
+
+task.spawn(function()
+    while task.wait(0.5) do
+        clean()
+    end
+end)
+
+clean()
+warn("✅ ULTIMATE SCRIPT LOADED | SINGLE TOGGLE ACTIVE")
+
+
 
 local walkspeedValue = 16
 local walkspeedConnection
