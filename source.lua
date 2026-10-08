@@ -170,31 +170,6 @@ local CoreGui = game:GetService("CoreGui")
 
 
 
--- ==================================================================
--- RAYFIELD GUI (WITH YOUR CONTROL)
--- ==================================================================
-for _, gui in ipairs(CoreGui:GetChildren()) do
-    if gui.Name == "RayfieldInterface" then
-        gui:Destroy()
-    end
-end
-
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-
-local Window = Rayfield:CreateWindow({
-    Name = "Squid Game X by FREE GUY",
-    LoadingTitle = "Loading...",
-    LoadingSubtitle = "SQUID GAME X SCRIPT",
-    ConfigurationSaving = {
-        Enabled = true,
-        FolderName = "SquidAmethyst",
-        FileName = "AmethystConfig"
-    },
-    
-    Theme = "Ocean"  
-})
-
-
 
 
 local PlayerTab = Window:CreateTab("Player", 4483362458)
