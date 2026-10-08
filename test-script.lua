@@ -43,6 +43,20 @@ local TeleportTab = Window:CreateTab("Teleport", 4483362458)
 
 -- ================== PLAYER TAB ==================
 
+DetectiveTab:CreateButton({
+    Name = "♥️ Activate Extra Life",
+    Callback = function()
+        if extraLifeUsed then return end -- already activated, do nothing
+
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        pcall(function()
+            ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ExtraLifePurchase"):InvokeServer()
+        end)
+
+        extraLifeUsed = true -- mark as used
+    end
+})
+
 
 
 local walkspeedValue = 16
