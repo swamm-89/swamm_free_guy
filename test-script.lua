@@ -955,6 +955,162 @@ GuardTab:CreateToggle({
 
 
 
+
+
+
+
+-- ================== LEGENDARY EVIDENCE FINDER ==================
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+local legendaryESP = {}
+local legendaryEnabled = false
+local showAllRarities = false
+
+local function getEvidenceRoot()
+    local data = workspace:FindFirstChild("Data")
+    if not data then return nil end
+    local detective = data:FindFirstChild("Detective")
+    if not detective then return nil end
+    local evidence = detective:FindFirstChild("Evidence")
+    if not evidence then return nil end
+    return evidence:FindFirstChild("Instances")
+end
+
+local function clearESP()
+    for _, obj in pairs(legendaryESP) do
+        if obj and obj.Parent then
+            obj:Destroy()
+        end
+    end
+    table.clear(legendaryESP)
+end
+
+local function createBillboard(part, text, color)
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "LegendaryESP"
+    billboard.Adornee = part
+    billboard.Size = UDim2.new(0, 200, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 3, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = part
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = color
+    label.TextStrokeTransparency = 0.3
+    label.TextSize = 16
+    label.Font = Enum.Font.GothamBold
+    label.Parent = billboard
+
+    return billboard
+end
+
+local function scanLegendary()
+    clearESP()
+    local root = getEvidenceRoot()
+    if not root then 
+        warn("Evidence Instances not found")
+        return 
+    end
+
+    local count = 0
+    for _, folder in ipairs(root:GetChildren()) do
+        local rarity = folder:GetAttribute("Rarity") or folder:FindFirstChild("Rarity")
+        local rarityName = nil
+
+        if typeof(rarity) == "string" then
+            rarityName = rarity
+        elseif rarity and rarity:IsA("StringValue") then
+            rarityName = rarity.Value
+        elseif folder.Name:lower():find("legendary") then
+            rarityName = "Legendary"
+        end
+
+        -- agar attribute nahi mila to naam se detect karo
+        if not rarityName then
+            local nameLower = folder.Name:lower()
+            if nameLower:find("legendary") then
+                rarityName = "Legendary"
+            elseif nameLower:find("epic") then
+                rarityName = "Epic"
+            elseif nameLower:find("rare") then
+                rarityName = "Rare"
+            else
+                rarityName = "Common"
+            end
+        end
+
+        local shouldShow = false
+        local color = Color3.fromRGB(255, 255, 255)
+
+        if rarityName == "Legendary" then
+            shouldShow = true
+            color = Color3.fromRGB(255, 215, 0) -- Gold
+        elseif showAllRarities then
+            shouldShow = true
+            if rarityName == "Epic" then
+                color = Color3.fromRGB(180, 80, 255)
+            elseif rarityName == "Rare" then
+                color = Color3.fromRGB(80, 160, 255)
+            else
+                color = Color3.fromRGB(200, 200, 200)
+            end
+        end
+
+        if shouldShow then
+            local ppart = folder:FindFirstChild("PPart") or folder:FindFirstChildWhichIsA("BasePart")
+            if ppart then
+                local esp = createBillboard(ppart, rarityName .. " Evidence", color)
+                table.insert(legendaryESP, esp)
+                count = count + 1
+            end
+        end
+    end
+    warn("Found " .. count .. " evidence markers")
+end
+
+-- UI
+DetectiveTab:CreateSection("Evidence Rarity ESP")
+
+DetectiveTab:CreateToggle({
+    Name = "Legendary Evidence ESP",
+    CurrentValue = false,
+    Callback = function(v)
+        legendaryEnabled = v
+        if v then
+            scanLegendary()
+        else
+            clearESP()
+        end
+    end
+})
+
+DetectiveTab:CreateToggle({
+    Name = "Show All Rarities (Epic/Rare too)",
+    CurrentValue = false,
+    Callback = function(v)
+        showAllRarities = v
+        if legendaryEnabled then
+            scanLegendary()
+        end
+    end
+})
+
+DetectiveTab:CreateButton({
+    Name = "🔄 Refresh Evidence Scan",
+    Callback = function()
+        if legendaryEnabled then
+            scanLegendary()
+        end
+    end
+})
+
+
+
 -- ================== NOTIFICATION ==================
 game.StarterGui:SetCore("SendNotification", {
     Title = "Squid Game X FREE GUY !",
