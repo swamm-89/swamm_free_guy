@@ -850,6 +850,110 @@ end
 
 
 
+------------------------GUARD TAB---------------------------------------
+
+GuardTab:CreateSection("Kitchen")
+
+local Player = game:GetService("Players").LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local HRP = Character:WaitForChild("HumanoidRootPart")
+local Tab -- Assume Tab is already created in your main UI
+
+local originalDurations = {}
+local promptAddedConn = nil
+local Range = 15 -- default for slider
+
+-- Refresh HRP on respawn
+Player.CharacterAdded:Connect(function(char)
+    Character = char
+    HRP = char:WaitForChild("HumanoidRootPart")
+end)
+
+-- INSTANT INTERACT
+local function enableInstantInteract()
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            originalDurations[obj] = obj.HoldDuration
+            obj.HoldDuration = 0
+        end
+    end
+    promptAddedConn = workspace.DescendantAdded:Connect(function(obj)
+        if obj:IsA("ProximityPrompt") then
+            originalDurations[obj] = obj.HoldDuration
+            obj.HoldDuration = 0
+        end
+    end)
+end
+
+local function disableInstantInteract()
+    for prompt, dur in pairs(originalDurations) do
+        if prompt and prompt.Parent then
+            prompt.HoldDuration = dur
+        end
+    end
+    originalDurations = {}
+    if promptAddedConn then
+        pcall(function() promptAddedConn:Disconnect() end)
+        promptAddedConn = nil
+    end
+end
+
+GuardTab:CreateToggle({
+    Name = "🤌 Instant Interact",
+    CurrentValue = false,
+    Callback = function(val)
+        if val then enableInstantInteract() else disableInstantInteract() end
+    end,
+})
+
+-- RANGE SLIDER
+GuardTab:CreateSlider({
+    Name = "🎚️ Interact Range",
+    Range = {10, 100},
+    Increment = 1,
+    Suffix = " studs",
+    CurrentValue = 15,
+    Callback = function(val)
+        Range = val
+    end,
+})
+
+-- AUTO INTERACT
+_G.AutoInteract = false
+local autoLoop
+GuardTab:CreateToggle({
+    Name = "🔘 Auto Interact",
+    CurrentValue = false,
+    Callback = function(val)
+        _G.AutoInteract = val
+        if val then
+            autoLoop = task.spawn(function()
+                while _G.AutoInteract do
+                    for _, prompt in ipairs(workspace:GetDescendants()) do
+                        if prompt:IsA("ProximityPrompt") and prompt.Enabled then
+                            if HRP and prompt.Parent and prompt.Parent:IsA("BasePart") then
+                                local dist = (HRP.Position - prompt.Parent.Position).Magnitude
+                                if dist <= Range then
+                                    pcall(function()
+                                        fireproximityprompt(prompt)
+                                    end)
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.08)
+                end
+            end)
+        else
+            if autoLoop then
+                task.cancel(autoLoop)
+            end
+        end
+    end,
+})
+
+
+
 
 -- ================== NOTIFICATION ==================
 game.StarterGui:SetCore("SendNotification", {
