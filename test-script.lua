@@ -294,6 +294,62 @@ PlayerTab:CreateToggle({
 
 -- ================== DETECTIVE TAB ==================
 
+-- ================== EVIDENCE COUNTER UI ==================
+local evidenceCount = 0
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "EvidenceCounterUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = game:GetService("CoreGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 180, 0, 50)
+frame.Position = UDim2.new(0, 20, 0, 120)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+frame.BackgroundTransparency = 0.2
+frame.BorderSizePixel = 0
+frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 8)
+corner.Parent = frame
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 20)
+title.Position = UDim2.new(0, 0, 0, 4)
+title.BackgroundTransparency = 1
+title.Text = "Evidence Submitted"
+title.TextColor3 = Color3.fromRGB(200, 200, 210)
+title.TextSize = 13
+title.Font = Enum.Font.Gotham
+title.Parent = frame
+
+local countLabel = Instance.new("TextLabel")
+countLabel.Size = UDim2.new(1, 0, 0, 26)
+countLabel.Position = UDim2.new(0, 0, 0, 22)
+countLabel.BackgroundTransparency = 1
+countLabel.Text = "0"
+countLabel.TextColor3 = Color3.fromRGB(100, 255, 140)
+countLabel.TextSize = 22
+countLabel.Font = Enum.Font.GothamBold
+countLabel.Parent = frame
+
+-- Function to increase count
+local function addEvidenceCount(amount)
+    amount = amount or 1
+    evidenceCount = evidenceCount + amount
+    countLabel.Text = tostring(evidenceCount)
+end
+
+-- Reset function (agar chahiye)
+local function resetEvidenceCount()
+    evidenceCount = 0
+    countLabel.Text = "0"
+end
+
+-- Example usage (apne Auto Collect success pe call karo):
+-- addEvidenceCount(1)
+
 ---  AUTO EVIDENCE  COLLECT ----
 local AUTO_COLLECT_RUNNING = false
 local TeleportBack = true
