@@ -222,13 +222,16 @@ PlayerTab:CreateToggle({
 })
 
 -- ================== DETECTIVE TAB ==================
+
+
+---  AUTO EVIDENCE  COLLECT ----
 local AUTO_COLLECT_RUNNING = false
 local TeleportBack = true
-local HOLD_TIME = 0.8
-local MAX_ATTEMPTS = 2
-local MAX_EVIDENCE = 8
-local DELAY_BETWEEN = 1.8
-
+-- ================== FIXED SETTINGS (Yahan change kar sakte ho) ==================
+local HOLD_TIME = 0.1      -- Har evidence ke paas kitna second rukega
+local MAX_ATTEMPTS = 3         -- Har evidence pe kitni baar try karega
+local MAX_EVIDENCE = 8         -- 8 evidence collect hone pe auto back teleport
+-- =====================================================================
 local function getInstancesRoot()
     local cur = workspace
     for _, name in {"Data", "Detective", "Evidence", "Instances"} do
@@ -237,7 +240,6 @@ local function getInstancesRoot()
     end
     return cur
 end
-
 local function safeTeleportTo(pos, offsetY)
     local char = player.Character
     if not char or not char:FindFirstChild("HumanoidRootPart") then return nil end
@@ -248,7 +250,6 @@ local function safeTeleportTo(pos, offsetY)
     end)
     return old
 end
-
 local function tryActivatePrompt(prompt, attempt)
     if not prompt or not prompt:IsA("ProximityPrompt") then return false end
     local parentPart = prompt.Parent
@@ -266,33 +267,38 @@ local function tryActivatePrompt(prompt, attempt)
     task.wait(HOLD_TIME)
     return true, old
 end
-
 local function collectAllPrompts()
     if AUTO_COLLECT_RUNNING then return end
     AUTO_COLLECT_RUNNING = true
     task.spawn(function()
         local root = getInstancesRoot()
-        if not root then
-            AUTO_COLLECT_RUNNING = false
-            return
+        if not root then 
+            AUTO_COLLECT_RUNNING = false 
+            return 
         end
         local orig = nil
         local collected = 0
-
+        local totalAttempts = 0
         for _, folder in ipairs(root:GetChildren()) do
             if not AUTO_COLLECT_RUNNING then break end
             local ppart = folder:FindFirstChild("PPart")
             if ppart then
                 local prompt = ppart:FindFirstChildWhichIsA("ProximityPrompt", true)
                 if prompt and prompt.Enabled then
+                    
                     local success = false
+                    
                     for attempt = 1, MAX_ATTEMPTS do
                         if not AUTO_COLLECT_RUNNING then break end
+                        
+                        totalAttempts = totalAttempts + 1
+                        print(string.format("Attempt %d/%d | Evidence %d", attempt, MAX_ATTEMPTS, collected + 1))
+                        
                         local _, oldPos = tryActivatePrompt(prompt, attempt)
-                        if oldPos and not orig then
-                            orig = oldPos
+                        if oldPos and not orig then 
+                            orig = oldPos 
                         end
-                        task.wait(DELAY_BETWEEN)
+                        task.wait(0.4)
                         if not prompt.Enabled or prompt.Parent == nil then
                             success = true
                             break
@@ -300,10 +306,11 @@ local function collectAllPrompts()
                     end
                     if success then
                         collected = collected + 1
-                        addEvidenceCount(1)
-                        print("Evidence Collected: " .. collected .. "/" .. MAX_EVIDENCE)
-
+                        print("✅ Evidence Collected: " .. collected .. "/" .. MAX_EVIDENCE)
+                        
+                        -- 8 Evidence collect hone pe turant back teleport
                         if collected >= MAX_EVIDENCE then
+                            print("🎯 " .. MAX_EVIDENCE .. " Evidence collected! Auto Teleporting Back...")
                             if TeleportBack and orig and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                                 pcall(function()
                                     player.Character.HumanoidRootPart.CFrame = orig
@@ -311,21 +318,23 @@ local function collectAllPrompts()
                             end
                             break
                         end
+                    else
+                        print("⚠️ Evidence missed after " .. MAX_ATTEMPTS .. " attempts")
                     end
                 end
             end
         end
-
+        -- Agar 8 se kam collect hue to normal teleport back
         if collected < MAX_EVIDENCE and TeleportBack and orig and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             pcall(function()
                 player.Character.HumanoidRootPart.CFrame = orig
             end)
         end
-        print("Auto Collect Finished! Total: " .. collected)
+        print(string.format("Auto Collect Finished! Total Collected: %d / %d", collected, MAX_EVIDENCE))
         AUTO_COLLECT_RUNNING = false
     end)
 end
-
+-- ================== UI (Sirf Toggle aur Teleport Back) ==================
 DetectiveTab:CreateSection("Auto Evidence Collector")
 DetectiveTab:CreateToggle({
     Name = "Auto Collect",
@@ -343,6 +352,9 @@ DetectiveTab:CreateToggle({
     CurrentValue = true,
     Callback = function(v) TeleportBack = v end
 })
+
+
+
 
 
 -- ================== ISLAND PATH ==================
@@ -411,11 +423,18 @@ DetectiveTab:CreateToggle({
     end
 })
 
--- ================== AUTO FARM LOOP ==================
+
+
+-- ================== AUTO FARM - INFINITE LOOP VERSION ==================
 local AUTO_FARM_RUNNING = false
-local WAIT_AFTER_COLLECT = 45
+-- ================== SETTINGS ==================
+local HOLD_TIME = 2.0
+local MAX_ATTEMPTS = 3
+local MAX_EVIDENCE = 8
+local WAIT_AFTER_COLLECT = 60
+-- Auto Walk Settings
 local StartTeleportPos = Vector3.new(8073.37, 88.97, 3679.23)
-local MidTeleportPos = Vector3.new(-1992.31, -859.86, 15906.73)
+local MidTeleportPos   = Vector3.new(-1992.31, -859.86, 15906.73)
 local waypoints = {
     Vector3.new(8073.96, 88.86, 3650.73),
     Vector3.new(8161.80, 100.84, 3650.35),
@@ -431,19 +450,27 @@ local waypoints = {
     Vector3.new(-2826.85, -783.00, 15337.36),
     Vector3.new(-2843.02, -786.00, 15511.34)
 }
-
+-- ================== AUTO COLLECT WITH FIXED TELEPORT BACK ==================
+local function getInstancesRoot()
+    local cur = workspace
+    for _, name in {"Data", "Detective", "Evidence", "Instances"} do
+        cur = cur:FindFirstChild(name)
+        if not cur then return nil end
+    end
+    return cur
+end
 local function collectEvidence()
     local root = getInstancesRoot()
     if not root then return end
     local returnPosition = nil
     local collected = 0
-
     for _, folder in ipairs(root:GetChildren()) do
         if not AUTO_FARM_RUNNING then break end
         local ppart = folder:FindFirstChild("PPart")
         if ppart then
             local prompt = ppart:FindFirstChildWhichIsA("ProximityPrompt", true)
             if prompt and prompt.Enabled then
+                
                 if not returnPosition then
                     local char = player.Character
                     if char and char:FindFirstChild("HumanoidRootPart") then
@@ -453,10 +480,12 @@ local function collectEvidence()
                 local success = false
                 for attempt = 1, MAX_ATTEMPTS do
                     if not AUTO_FARM_RUNNING then break end
+                    
                     local char = player.Character
                     if char and char:FindFirstChild("HumanoidRootPart") then
                         char.HumanoidRootPart.CFrame = CFrame.new(prompt.Parent.Position + Vector3.new(0, 4, 0))
                     end
+                    
                     task.wait(0.2)
                     pcall(function()
                         fireproximityprompt(prompt, prompt.HoldDuration or 0)
@@ -468,15 +497,15 @@ local function collectEvidence()
                     end
                 end
                 if success then
-                    collected = collected + 1
-                    addEvidenceCount(1)
-                    if collected >= MAX_EVIDENCE then break end
+                    collected += 1
+                    if collected >= MAX_EVIDENCE then
+                        break
+                    end
                 end
-                task.wait(DELAY_BETWEEN)
             end
         end
     end
-
+    -- Teleport Back
     if returnPosition then
         local char = player.Character
         if char and char:FindFirstChild("HumanoidRootPart") then
@@ -486,23 +515,22 @@ local function collectEvidence()
     end
     print("Collect Finished | Total: " .. collected)
 end
-
+-- ================== AUTO SUBMIT ==================
 local function submitEvidence()
-    local boat = workspace.Data and workspace.Data.Detective and workspace.Data.Detective.Boat and workspace.Data.Detective.Boat["Speedy Bowrider"]
+    local boat = workspace.Data.Detective.Boat and workspace.Data.Detective.Boat["Speedy Bowrider"]
     if not boat then return end
-    local prompt = boat:FindFirstChild("RearPart", true) and boat.RearPart:FindFirstChild("Attachment", true) and boat.RearPart.Attachment:FindFirstChild("ProximityPrompt")
+    local prompt = boat:FindFirstChild("RearPart", true) 
+        and boat.RearPart:FindFirstChild("Attachment", true) 
+        and boat.RearPart.Attachment:FindFirstChild("ProximityPrompt")
     if not prompt then return end
-
     local char = player.Character
     if not char or not char:FindFirstChild("HumanoidRootPart") then return end
     local hrp = char.HumanoidRootPart
     local origCFrame = hrp.CFrame
-
     prompt.MaxActivationDistance = 50
     prompt.Enabled = true
     prompt.RequiresLineOfSight = false
     prompt.HoldDuration = 0.5
-
     hrp.CFrame = CFrame.new(prompt.Parent.Parent.Position + Vector3.new(0, 3, 0))
     task.wait(0.4)
     pcall(function()
@@ -511,7 +539,7 @@ local function submitEvidence()
     task.wait(0.8)
     hrp.CFrame = origCFrame
 end
-
+-- ================== AUTO WALK ==================
 local function startAutoWalk()
     local hum = player.Character and player.Character:FindFirstChild("Humanoid")
     if not hum then return end
@@ -532,38 +560,37 @@ local function startAutoWalk()
         task.wait(0.5)
     end
 end
-
+-- ================== MAIN LOOP ==================
 local function autoFarmLoop()
     while AUTO_FARM_RUNNING do
-        print("Starting new Auto Farm Cycle...")
-        collectEvidence()
-        task.wait(WAIT_AFTER_COLLECT)
+        print("🔄 Starting new Auto Farm Cycle...")
+        collectEvidence()                    -- 1. Collect + Teleport Back
+        task.wait(WAIT_AFTER_COLLECT)        -- 2. 60 sec wait
         if not AUTO_FARM_RUNNING then break end
-        startAutoWalk()
+        startAutoWalk()                      -- 3. Auto Walk
         if not AUTO_FARM_RUNNING then break end
-        submitEvidence()
-        print("Cycle Completed")
-        task.wait(2)
+        submitEvidence()                     -- 4. Submit
+        print("✅ Cycle Completed | Starting next cycle in 2 seconds...")
+        task.wait(2)   -- Chhota delay next cycle se pehle
     end
     print("AUTO FARM Loop Stopped")
 end
-
-DetectiveTab:CreateSection("AUTO FARM - LOOP MODE")
+-- ================== GUI ==================
+DetectiveTab:CreateSection("🚀 AUTO FARM - LOOP MODE")
 DetectiveTab:CreateToggle({
     Name = "AUTO FARM LOOP (Infinite Cycle)",
     CurrentValue = false,
     Callback = function(v)
         if v then
             AUTO_FARM_RUNNING = true
-            print("AUTO FARM LOOP Started")
-            task.spawn(autoFarmLoop)
+            print("🚀 AUTO FARM LOOP Started")
+            task.spawn(autoFarmLoop)        -- Loop ko background mein chala rahe hain
         else
             AUTO_FARM_RUNNING = false
-            print("AUTO FARM LOOP Stopped")
+            print("🛑 AUTO FARM LOOP Stopped")
         end
     end
 })
-
 -- ================== TELEPORT TAB ==================
 local normalLocations = {
     ["Sniper Room"] = CFrame.new(-12141.4541, -730.498535, -2957.66406),
