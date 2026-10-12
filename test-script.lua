@@ -888,12 +888,6 @@ GuardTab:CreateToggle({
 
 
 
-
-
-
-
-45
-
 -- ================== NOTIFICATION ==================
 game.StarterGui:SetCore("SendNotification", {
     Title = "Squid Game X FREE GUY !",
