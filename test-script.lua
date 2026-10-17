@@ -40,6 +40,9 @@ local evidenceCount = 0
 
 
 
+
+
+
 -- ================== CUTSCENE REMOVER ==================
 DetectiveTab:CreateToggle({
     Name = "Cutseen Remover",
@@ -150,6 +153,205 @@ end)
 clean()
 
 -- ================== PLAYER TAB ==================
+
+-- ================== HITBOX EXPANDER + FRIEND PROTECTION ==================
+local hitboxEnabled = false
+local friendProtection = false
+local hitboxSize = 180
+local hitboxTransparency = 0.7
+local hitboxConnection = nil
+local listUpdateConnection = nil
+local PlayersList = {}
+local originalHRP = {}
+local friendsCache = {}
+
+-- Friends list cache update
+local function updateFriendsCache()
+    friendsCache = {}
+    pcall(function()
+        local friends = Players.LocalPlayer:GetFriendsOnline()
+        -- GetFriendsOnline se online friends milte hain, better method:
+        for _, pl in ipairs(Players:GetPlayers()) do
+            if pl ~= player then
+                local success, isFriend = pcall(function()
+                    return player:IsFriendsWithAsync(pl.UserId)
+                end)
+                if success and isFriend then
+                    friendsCache[pl.UserId] = true
+                end
+            end
+        end
+    end)
+end
+
+local function isFriend(plr)
+    if not friendProtection then return false end
+    return friendsCache[plr.UserId] == true
+end
+
+local function restorePlayer(pl)
+    if not pl or not pl.Character then return end
+    local part = pl.Character:FindFirstChild("HumanoidRootPart")
+    if not part then return end
+
+    local orig = originalHRP[pl.UserId]
+    if orig then
+        part.Size = orig.Size
+        part.Transparency = orig.Transparency
+        part.CanCollide = orig.CanCollide
+        part.Material = orig.Material
+        part.BrickColor = orig.BrickColor
+        part.Color = orig.Color
+    else
+        part.Size = Vector3.new(2, 2, 1)
+        part.Transparency = 0
+        part.CanCollide = true
+        part.Material = Enum.Material.Plastic
+    end
+end
+
+local function applyHitbox(pl)
+    if not pl or not pl.Character then return end
+    local part = pl.Character:FindFirstChild("HumanoidRootPart")
+    if not part then return end
+
+    -- Friend protection
+    if isFriend(pl) then
+        restorePlayer(pl)
+        return
+    end
+
+    -- Save original only once
+    if not originalHRP[pl.UserId] then
+        originalHRP[pl.UserId] = {
+            Size = part.Size,
+            Transparency = part.Transparency,
+            CanCollide = part.CanCollide,
+            Material = part.Material,
+            BrickColor = part.BrickColor,
+            Color = part.Color
+        }
+    end
+
+    part.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
+    part.Transparency = hitboxTransparency
+    part.BrickColor = BrickColor.new("Bright blue")
+    part.Material = Enum.Material.ForceField
+    part.CanCollide = false
+end
+
+local function updatePlayersList()
+    PlayersList = {}
+    for _, pl in ipairs(Players:GetPlayers()) do
+        if pl ~= player and pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+            table.insert(PlayersList, pl)
+        end
+    end
+end
+
+NewModsTab:CreateSection("Hitbox Expander")
+
+NewModsTab:CreateToggle({
+    Name = "Hitbox Expander",
+    CurrentValue = false,
+    Callback = function(Value)
+        hitboxEnabled = Value
+
+        if hitboxEnabled then
+            updateFriendsCache()
+            updatePlayersList()
+
+            -- List + friends refresh
+            listUpdateConnection = task.spawn(function()
+                while hitboxEnabled do
+                    updatePlayersList()
+                    updateFriendsCache()
+                    task.wait(2)
+                end
+            end)
+
+            -- Main loop
+            hitboxConnection = RunService.Heartbeat:Connect(function()
+                if not hitboxEnabled then return end
+                for _, pl in ipairs(PlayersList) do
+                    applyHitbox(pl)
+                end
+            end)
+        else
+            -- Reset everyone
+            for _, pl in ipairs(Players:GetPlayers()) do
+                if pl ~= player then
+                    restorePlayer(pl)
+                end
+            end
+
+            if hitboxConnection then
+                hitboxConnection:Disconnect()
+                hitboxConnection = nil
+            end
+
+            if listUpdateConnection then
+                task.cancel(listUpdateConnection)
+                listUpdateConnection = nil
+            end
+
+            table.clear(originalHRP)
+            table.clear(PlayersList)
+            table.clear(friendsCache)
+        end
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Friend Protection",
+    CurrentValue = false,
+    Callback = function(Value)
+        friendProtection = Value
+        if hitboxEnabled then
+            updateFriendsCache()
+            -- Turant apply
+            for _, pl in ipairs(PlayersList) do
+                applyHitbox(pl)
+            end
+        end
+    end
+})
+PlayerTab:CreateSlider({
+    Name = "Hitbox Size",
+    Range = {10, 500},
+    Increment = 5,
+    CurrentValue = 180,
+    Callback = function(v)
+        hitboxSize = v
+    end
+})
+
+PlayerTab:CreateSlider({
+    Name = "Transparency",
+    Range = {0, 1},
+    Increment = 0.05,
+    CurrentValue = 0.7,
+    Callback = function(v)
+        hitboxTransparency = v
+    end
+})
+
+-- Cleanup when player leaves
+Players.PlayerRemoving:Connect(function(plr)
+    originalHRP[plr.UserId] = nil
+    friendsCache[plr.UserId] = nil
+end)
+
+-- Character respawn handle
+Players.PlayerAdded:Connect(function(plr)
+    plr.CharacterAdded:Connect(function()
+        task.wait(1)
+        if hitboxEnabled then
+            updatePlayersList()
+            applyHitbox(plr)
+        end
+    end)
+end)
 local walkspeedValue = 16
 local walkspeedConnection
 local infJumpConnection
