@@ -249,9 +249,9 @@ local function updatePlayersList()
     end
 end
 
-NewModsTab:CreateSection("Hitbox Expander")
+PlayerTab:CreateSection("Hitbox Expander")
 
-NewModsTab:CreateToggle({
+PlayerTab:CreateToggle({
     Name = "Hitbox Expander",
     CurrentValue = false,
     Callback = function(Value)
