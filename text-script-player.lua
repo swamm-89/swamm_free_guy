@@ -203,9 +203,11 @@ local function applyHitbox(pl, showFlash)
     local part = pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
+    -- Friends: sirf flash karo, hitbox mat expand karo, restore mat karo
     if isFriend(pl) then
-        restorePlayer(pl)
-        if showFlash then flashFriend(pl) end
+        if showFlash then
+            flashFriend(pl)
+        end
         return
     end
 
@@ -224,7 +226,7 @@ local function applyHitbox(pl, showFlash)
     pcall(function()
         part.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
         part.CanCollide = false
-        part.Transparency = 1 -- invisible by default
+        part.Transparency = 1
     end)
 
     if showFlash then flashEnemy(pl) end
