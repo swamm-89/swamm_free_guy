@@ -75,9 +75,9 @@ local function restorePlayer(pl)
     local part = pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
-    -- Remove visual indicators
-    local hitOutline = part:FindFirstChild("HitboxOutline")
-    if hitOutline then hitOutline:Destroy() end
+    -- Remove all visuals
+    local hitVisual = pl.Character:FindFirstChild("HitboxVisual")
+    if hitVisual then hitVisual:Destroy() end
     local friendBox = pl.Character:FindFirstChild("FriendIndicator")
     if friendBox then friendBox:Destroy() end
 
@@ -103,45 +103,57 @@ end
 -- ================== FLASH INDICATORS ==================
 
 local function flashEnemy(pl)
-    local part = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
-    if not part then return end
+    local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
 
-    local old = part:FindFirstChild("HitboxOutline")
+    -- Remove old visual
+    local old = pl.Character:FindFirstChild("HitboxVisual")
     if old then old:Destroy() end
 
-    -- Semi-transparent red fill — player visible through it
+    -- HRP invisible, just expanded for hit detection
     pcall(function()
-        part.Transparency = 0.55
-        part.BrickColor = BrickColor.new("Really red")
-        part.Material = Enum.Material.ForceField
-        part.CanCollide = false
+        hrp.Transparency = 1
+        hrp.CanCollide = false
     end)
 
-    -- Clean red edges on top
+    -- Separate red visual box
+    local visual = Instance.new("Part")
+    visual.Name = "HitboxVisual"
+    visual.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
+    visual.Transparency = 0.5
+    visual.BrickColor = BrickColor.new("Really red")
+    visual.Material = Enum.Material.ForceField
+    visual.CanCollide = false
+    visual.Anchored = false
+    visual.Massless = true
+    visual.CastShadow = false
+
+    local weld = Instance.new("WeldConstraint")
+    weld.Part0 = hrp
+    weld.Part1 = visual
+    weld.Parent = visual
+
+    visual.CFrame = hrp.CFrame
+    visual.Parent = pl.Character
+
+    -- Clean edges
     local outline = Instance.new("SelectionBox")
     outline.Name = "HitboxOutline"
-    outline.Adornee = part
+    outline.Adornee = visual
     outline.Color3 = Color3.fromRGB(255, 20, 20)
     outline.LineThickness = 0.05
-    outline.SurfaceTransparency = 1       -- no extra fill from SelectionBox
-    outline.SurfaceColor3 = Color3.fromRGB(255, 0, 0)
-    outline.Parent = part
+    outline.SurfaceTransparency = 1
+    outline.Parent = visual
 
-    -- 10 sec then invisible (hitbox stays expanded)
+    -- 10 sec then destroy visual only (hitbox stays)
     task.delay(10, function()
         pcall(function()
-            if outline and outline.Parent then
-                outline:Destroy()
-            end
-            if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-                local hrp = pl.Character.HumanoidRootPart
-                hrp.Transparency = 1
-                hrp.Material = Enum.Material.Plastic
+            if visual and visual.Parent then
+                visual:Destroy()
             end
         end)
     end)
 end
-
 -- Friend: small green box 5 sec then destroy
 local function flashFriend(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
@@ -150,16 +162,16 @@ local function flashFriend(pl)
     local old = pl.Character:FindFirstChild("FriendIndicator")
     if old then old:Destroy() end
 
-    -- Small green semi-transparent box
     local box = Instance.new("Part")
     box.Name = "FriendIndicator"
     box.Size = Vector3.new(4, 4, 4)
-    box.Transparency = 0.55
+    box.Transparency = 0.5
     box.BrickColor = BrickColor.new("Lime green")
     box.Material = Enum.Material.ForceField
     box.CanCollide = false
     box.Anchored = false
     box.Massless = true
+    box.CastShadow = false
 
     local weld = Instance.new("WeldConstraint")
     weld.Part0 = hrp
@@ -169,17 +181,14 @@ local function flashFriend(pl)
     box.CFrame = hrp.CFrame
     box.Parent = pl.Character
 
-    -- Clean green edges
     local outline = Instance.new("SelectionBox")
     outline.Name = "FriendOutline"
     outline.Adornee = box
     outline.Color3 = Color3.fromRGB(20, 255, 20)
     outline.LineThickness = 0.05
     outline.SurfaceTransparency = 1
-    outline.SurfaceColor3 = Color3.fromRGB(0, 255, 0)
     outline.Parent = box
 
-    -- 10 sec then destroy
     task.delay(10, function()
         pcall(function()
             if box and box.Parent then
@@ -188,7 +197,6 @@ local function flashFriend(pl)
         end)
     end)
 end
-
 -- ================== APPLY HITBOX ==================
 local function applyHitbox(pl, showFlash)
     if not pl or not pl.Character then return end
