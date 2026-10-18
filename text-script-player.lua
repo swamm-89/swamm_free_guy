@@ -75,9 +75,11 @@ local function restorePlayer(pl)
     local part = pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
-    -- Remove friend indicator if exists
-    local indicator = pl.Character:FindFirstChild("FriendIndicator")
-    if indicator then indicator:Destroy() end
+    -- Remove visual indicators
+    local hitOutline = part:FindFirstChild("HitboxOutline")
+    if hitOutline then hitOutline:Destroy() end
+    local friendBox = pl.Character:FindFirstChild("FriendIndicator")
+    if friendBox then friendBox:Destroy() end
 
     local orig = originalHRP[pl.UserId]
     if orig then
@@ -98,7 +100,6 @@ local function restorePlayer(pl)
         end)
     end
 end
-
 -- ================== FLASH INDICATORS ==================
 
 -- Enemy: red box 5 sec then invisible (hitbox stays expanded)
@@ -106,17 +107,31 @@ local function flashEnemy(pl)
     local part = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
+    -- Remove old outline if exists
+    local old = part:FindFirstChild("HitboxOutline")
+    if old then old:Destroy() end
+
+    -- Part invisible so player is visible inside
     pcall(function()
-        part.Transparency = 0.25
-        part.BrickColor = BrickColor.new("Really red")
-        part.Material = Enum.Material.Neon
+        part.Transparency = 1
+        part.Material = Enum.Material.Plastic
     end)
 
-    task.delay(5, function()
+    -- Clean wireframe outline
+    local outline = Instance.new("SelectionBox")
+    outline.Name = "HitboxOutline"
+    outline.Adornee = part
+    outline.Color3 = Color3.fromRGB(255, 30, 30)       -- red edges
+    outline.LineThickness = 0.05                         -- clean visible lines
+    outline.SurfaceTransparency = 1                      -- fully transparent fill
+    outline.SurfaceColor3 = Color3.fromRGB(255, 0, 0)
+    outline.Parent = part
+
+    -- Auto remove after 10 sec
+    task.delay(10, function()
         pcall(function()
-            if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-                pl.Character.HumanoidRootPart.Transparency = 1
-                pl.Character.HumanoidRootPart.Material = Enum.Material.Plastic
+            if outline and outline.Parent then
+                outline:Destroy()
             end
         end)
     end)
@@ -127,30 +142,42 @@ local function flashFriend(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
 
+    -- Remove old if stacked
     local old = pl.Character:FindFirstChild("FriendIndicator")
     if old then old:Destroy() end
 
-    local indicator = Instance.new("Part")
-    indicator.Name = "FriendIndicator"
-    indicator.Size = Vector3.new(4, 4, 4)
-    indicator.BrickColor = BrickColor.new("Lime green")
-    indicator.Material = Enum.Material.Neon
-    indicator.Transparency = 0.2
-    indicator.CanCollide = false
-    indicator.Anchored = false
+    -- Small invisible box welded to player
+    local box = Instance.new("Part")
+    box.Name = "FriendIndicator"
+    box.Size = Vector3.new(4, 4, 4)
+    box.Transparency = 1
+    box.CanCollide = false
+    box.Anchored = false
+    box.Massless = true
 
     local weld = Instance.new("WeldConstraint")
     weld.Part0 = hrp
-    weld.Part1 = indicator
-    weld.Parent = indicator
+    weld.Part1 = box
+    weld.Parent = box
 
-    indicator.CFrame = hrp.CFrame
-    indicator.Parent = pl.Character
+    box.CFrame = hrp.CFrame
+    box.Parent = pl.Character
 
-    task.delay(5, function()
+    -- Green wireframe on the box
+    local outline = Instance.new("SelectionBox")
+    outline.Name = "FriendOutline"
+    outline.Adornee = box
+    outline.Color3 = Color3.fromRGB(30, 255, 30)        -- green edges
+    outline.LineThickness = 0.05
+    outline.SurfaceTransparency = 1                      -- transparent fill
+    outline.SurfaceColor3 = Color3.fromRGB(0, 255, 0)
+    outline.Parent = box
+
+    -- Auto remove after 10 sec
+    task.delay(10, function()
         pcall(function()
-            if indicator and indicator.Parent then
-                indicator:Destroy()
+            if box and box.Parent then
+                box:Destroy() -- destroys box + outline + weld sab saath
             end
         end)
     end)
