@@ -107,9 +107,9 @@ local function flashEnemy(pl)
     if not part then return end
 
     pcall(function()
-        part.Transparency = 0.6
-        part.BrickColor = BrickColor.new("Bright red")
-        part.Material = Enum.Material.ForceField
+        part.Transparency = 0.25
+        part.BrickColor = BrickColor.new("Really red")
+        part.Material = Enum.Material.Neon
     end)
 
     task.delay(5, function()
@@ -127,16 +127,15 @@ local function flashFriend(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
 
-    -- Remove old indicator if stacked
     local old = pl.Character:FindFirstChild("FriendIndicator")
     if old then old:Destroy() end
 
     local indicator = Instance.new("Part")
     indicator.Name = "FriendIndicator"
     indicator.Size = Vector3.new(4, 4, 4)
-    indicator.BrickColor = BrickColor.new("Bright green")
-    indicator.Material = Enum.Material.ForceField
-    indicator.Transparency = 0.5
+    indicator.BrickColor = BrickColor.new("Lime green")
+    indicator.Material = Enum.Material.Neon
+    indicator.Transparency = 0.2
     indicator.CanCollide = false
     indicator.Anchored = false
 
@@ -213,7 +212,7 @@ local function hookCharacter(plr)
         task.wait(1)
         if hitboxEnabled then
             updatePlayersList()
-            applyHitbox(plr, true) -- flash on respawn
+            applyHitbox(plr, false) -- no flash on respawn, silent expand
         end
     end)
 end
