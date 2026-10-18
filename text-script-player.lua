@@ -102,36 +102,41 @@ local function restorePlayer(pl)
 end
 -- ================== FLASH INDICATORS ==================
 
--- Enemy: red box 5 sec then invisible (hitbox stays expanded)
 local function flashEnemy(pl)
     local part = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
-    -- Remove old outline if exists
     local old = part:FindFirstChild("HitboxOutline")
     if old then old:Destroy() end
 
-    -- Part invisible so player is visible inside
+    -- Semi-transparent red fill — player visible through it
     pcall(function()
-        part.Transparency = 1
-        part.Material = Enum.Material.Plastic
+        part.Transparency = 0.55
+        part.BrickColor = BrickColor.new("Really red")
+        part.Material = Enum.Material.ForceField
+        part.CanCollide = false
     end)
 
-    -- Clean wireframe outline
+    -- Clean red edges on top
     local outline = Instance.new("SelectionBox")
     outline.Name = "HitboxOutline"
     outline.Adornee = part
-    outline.Color3 = Color3.fromRGB(255, 30, 30)       -- red edges
-    outline.LineThickness = 0.05                         -- clean visible lines
-    outline.SurfaceTransparency = 1                      -- fully transparent fill
+    outline.Color3 = Color3.fromRGB(255, 20, 20)
+    outline.LineThickness = 0.05
+    outline.SurfaceTransparency = 1       -- no extra fill from SelectionBox
     outline.SurfaceColor3 = Color3.fromRGB(255, 0, 0)
     outline.Parent = part
 
-    -- Auto remove after 10 sec
+    -- 10 sec then invisible (hitbox stays expanded)
     task.delay(10, function()
         pcall(function()
             if outline and outline.Parent then
                 outline:Destroy()
+            end
+            if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = pl.Character.HumanoidRootPart
+                hrp.Transparency = 1
+                hrp.Material = Enum.Material.Plastic
             end
         end)
     end)
@@ -142,15 +147,16 @@ local function flashFriend(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
 
-    -- Remove old if stacked
     local old = pl.Character:FindFirstChild("FriendIndicator")
     if old then old:Destroy() end
 
-    -- Small invisible box welded to player
+    -- Small green semi-transparent box
     local box = Instance.new("Part")
     box.Name = "FriendIndicator"
     box.Size = Vector3.new(4, 4, 4)
-    box.Transparency = 1
+    box.Transparency = 0.55
+    box.BrickColor = BrickColor.new("Lime green")
+    box.Material = Enum.Material.ForceField
     box.CanCollide = false
     box.Anchored = false
     box.Massless = true
@@ -163,21 +169,21 @@ local function flashFriend(pl)
     box.CFrame = hrp.CFrame
     box.Parent = pl.Character
 
-    -- Green wireframe on the box
+    -- Clean green edges
     local outline = Instance.new("SelectionBox")
     outline.Name = "FriendOutline"
     outline.Adornee = box
-    outline.Color3 = Color3.fromRGB(30, 255, 30)        -- green edges
+    outline.Color3 = Color3.fromRGB(20, 255, 20)
     outline.LineThickness = 0.05
-    outline.SurfaceTransparency = 1                      -- transparent fill
+    outline.SurfaceTransparency = 1
     outline.SurfaceColor3 = Color3.fromRGB(0, 255, 0)
     outline.Parent = box
 
-    -- Auto remove after 10 sec
+    -- 10 sec then destroy
     task.delay(10, function()
         pcall(function()
             if box and box.Parent then
-                box:Destroy() -- destroys box + outline + weld sab saath
+                box:Destroy()
             end
         end)
     end)
