@@ -36,8 +36,7 @@ local TeleportTab = Window:CreateTab("Teleport", 4483362458)
 local scriptEnabled = false
 local evidenceCount = 0
 
-
--- ================== HITBOX EXPANDER + FRIEND PROTECTION ==================
+-- ================== HITBOX EXPANDER + FRIEND PROTECTION (FIXED) ==================
 local hitboxEnabled = false
 local friendProtection = false
 local hitboxSize = 180
@@ -47,26 +46,36 @@ local PlayersList = {}
 local originalHRP = {}
 local friendsCache = {}
 
--- ================== FRIEND UTILS ==================
+-- ================== FRIEND UTILS (STRONGER) ==================
 local function cacheFriendStatus(plr)
-    if plr == player then return end
+    if not plr or plr == player then return end
     local success, isFriend = pcall(function()
         return player:IsFriendsWith(plr.UserId)
     end)
     if success then
         friendsCache[plr.UserId] = isFriend
+    else
+        -- fail hone pe safe side pe friend maano mat
+        friendsCache[plr.UserId] = false
     end
 end
 
 local function updateFriendsCache()
     for _, pl in ipairs(Players:GetPlayers()) do
-        cacheFriendStatus(pl)
+        if pl ~= player then
+            cacheFriendStatus(pl)
+        end
     end
 end
 
 local function isFriend(plr)
     if not friendProtection then return false end
-    return friendsCache[plr.UserId] == true
+    if not plr then return false end
+    -- double check
+    if friendsCache[plr.UserId] == true then
+        return true
+    end
+    return false
 end
 
 -- ================== RESTORE ==================
@@ -75,7 +84,6 @@ local function restorePlayer(pl)
     local part = pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
-    -- Remove all visuals
     local hitVisual = pl.Character:FindFirstChild("HitboxVisual")
     if hitVisual then hitVisual:Destroy() end
     local friendBox = pl.Character:FindFirstChild("FriendIndicator")
@@ -100,23 +108,20 @@ local function restorePlayer(pl)
         end)
     end
 end
--- ================== FLASH INDICATORS ==================
 
+-- ================== FLASH ==================
 local function flashEnemy(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
 
-    -- Remove old visual
     local old = pl.Character:FindFirstChild("HitboxVisual")
     if old then old:Destroy() end
 
-    -- HRP invisible, just expanded for hit detection
     pcall(function()
         hrp.Transparency = 1
         hrp.CanCollide = false
     end)
 
-    -- Separate red visual box
     local visual = Instance.new("Part")
     visual.Name = "HitboxVisual"
     visual.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
@@ -136,7 +141,6 @@ local function flashEnemy(pl)
     visual.CFrame = hrp.CFrame
     visual.Parent = pl.Character
 
-    -- Clean edges
     local outline = Instance.new("SelectionBox")
     outline.Name = "HitboxOutline"
     outline.Adornee = visual
@@ -145,8 +149,7 @@ local function flashEnemy(pl)
     outline.SurfaceTransparency = 1
     outline.Parent = visual
 
-    -- 10 sec then destroy visual only (hitbox stays)
-    task.delay(10, function()
+    task.delay(8, function()
         pcall(function()
             if visual and visual.Parent then
                 visual:Destroy()
@@ -154,7 +157,7 @@ local function flashEnemy(pl)
         end)
     end)
 end
--- Friend: small green box 5 sec then destroy
+
 local function flashFriend(pl)
     local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
@@ -162,10 +165,13 @@ local function flashFriend(pl)
     local old = pl.Character:FindFirstChild("FriendIndicator")
     if old then old:Destroy() end
 
+    -- FORCE restore friend hitbox (important)
+    restorePlayer(pl)
+
     local box = Instance.new("Part")
     box.Name = "FriendIndicator"
     box.Size = Vector3.new(4, 4, 4)
-    box.Transparency = 0.5
+    box.Transparency = 0.4
     box.BrickColor = BrickColor.new("Lime green")
     box.Material = Enum.Material.ForceField
     box.CanCollide = false
@@ -189,7 +195,7 @@ local function flashFriend(pl)
     outline.SurfaceTransparency = 1
     outline.Parent = box
 
-    task.delay(10, function()
+    task.delay(8, function()
         pcall(function()
             if box and box.Parent then
                 box:Destroy()
@@ -197,21 +203,24 @@ local function flashFriend(pl)
         end)
     end)
 end
--- ================== APPLY HITBOX ==================
+
+-- ================== APPLY HITBOX (STRICT FRIEND CHECK) ==================
 local function applyHitbox(pl, showFlash)
     if not pl or not pl.Character then return end
     local part = pl.Character:FindFirstChild("HumanoidRootPart")
     if not part then return end
 
-    -- Friends: sirf flash karo, hitbox mat expand karo, restore mat karo
+    -- ========== STRICT FRIEND PROTECTION ==========
     if isFriend(pl) then
+        -- Friend ko hamesha restore karo + expand mat karo
+        restorePlayer(pl)
         if showFlash then
             flashFriend(pl)
         end
-        return
+        return -- bahut important: yahan se aage mat jao
     end
 
-    -- Save original once
+    -- Enemy only
     if not originalHRP[pl.UserId] then
         originalHRP[pl.UserId] = {
             Size = part.Size,
@@ -229,10 +238,11 @@ local function applyHitbox(pl, showFlash)
         part.Transparency = 1
     end)
 
-    if showFlash then flashEnemy(pl) end
+    if showFlash then
+        flashEnemy(pl)
+    end
 end
 
--- Flash everyone (called on toggle ON / size change)
 local function flashAll()
     for _, pl in ipairs(PlayersList) do
         applyHitbox(pl, true)
@@ -252,16 +262,19 @@ end
 -- ================== CHARACTER HOOKS ==================
 local function hookCharacter(plr)
     plr.CharacterAdded:Connect(function()
-        task.wait(1)
+        task.wait(1.2)
         if hitboxEnabled then
+            cacheFriendStatus(plr) -- respawn pe friend status refresh
             updatePlayersList()
-            applyHitbox(plr, false) -- no flash on respawn, silent expand
+            applyHitbox(plr, false)
         end
     end)
 end
 
 for _, plr in ipairs(Players:GetPlayers()) do
-    if plr ~= player then hookCharacter(plr) end
+    if plr ~= player then
+        hookCharacter(plr)
+    end
 end
 
 Players.PlayerAdded:Connect(function(plr)
@@ -275,10 +288,8 @@ Players.PlayerRemoving:Connect(function(plr)
 end)
 
 -- ================== UI ==================
-PlayerTab:CreateSection("Hitbox Expander")
-
 PlayerTab:CreateToggle({
-    Name = "Hitbox Expander",
+    Name = "Hitbox Expander🔴",
     CurrentValue = false,
     Callback = function(Value)
         hitboxEnabled = Value
@@ -286,32 +297,38 @@ PlayerTab:CreateToggle({
         if hitboxEnabled then
             updateFriendsCache()
             updatePlayersList()
-            flashAll() -- RED enemies + GREEN friends for 5s
+            flashAll()
 
-            -- Silently maintain hitbox for new/respawning players
             listUpdateThread = task.spawn(function()
                 while hitboxEnabled do
                     updatePlayersList()
-                    task.wait(3)
+                    updateFriendsCache() -- friends bhi refresh
+                    task.wait(4)
                 end
             end)
 
-            -- Quiet apply loop (no flash, just keep hitbox expanded)
             hitboxThread = task.spawn(function()
                 while hitboxEnabled do
                     for _, pl in ipairs(PlayersList) do
-                        applyHitbox(pl, false) -- no flash on routine check
+                        -- Friend ko force restore rakho
+                        if isFriend(pl) then
+                            restorePlayer(pl)
+                        else
+                            applyHitbox(pl, false)
+                        end
                     end
-                    task.wait(2)
+                    task.wait(1.5)
                 end
             end)
         else
             for _, pl in ipairs(Players:GetPlayers()) do
-                if pl ~= player then restorePlayer(pl) end
+                if pl ~= player then
+                    restorePlayer(pl)
+                end
             end
 
-            if hitboxThread then task.cancel(hitboxThread); hitboxThread = nil end
-            if listUpdateThread then task.cancel(listUpdateThread); listUpdateThread = nil end
+            if hitboxThread then task.cancel(hitboxThread) hitboxThread = nil end
+            if listUpdateThread then task.cancel(listUpdateThread) listUpdateThread = nil end
 
             table.clear(originalHRP)
             table.clear(PlayersList)
@@ -320,30 +337,37 @@ PlayerTab:CreateToggle({
 })
 
 PlayerTab:CreateSlider({
-    Name = "Hitbox Size",
+    Name = "Hitbox Size📐",
     Range = {10, 500},
     Increment = 5,
     CurrentValue = 180,
     Callback = function(v)
         hitboxSize = v
         if hitboxEnabled then
-            flashAll() -- size change = flash RED 5s with new size
+            flashAll()
         end
     end
 })
 
 PlayerTab:CreateToggle({
-    Name = "Friend Protection",
-    CurrentValue = true,
+    Name = "Friend Protection💗",
+    CurrentValue = false,
     Callback = function(Value)
         friendProtection = Value
         if hitboxEnabled then
             updateFriendsCache()
-            flashAll() -- re-flash to show updated status
+            -- Friends ko force restore
+            for _, pl in ipairs(PlayersList) do
+                if isFriend(pl) then
+                    restorePlayer(pl)
+                    flashFriend(pl)
+                else
+                    applyHitbox(pl, true)
+                end
+            end
         end
     end
 })
-
 
 
 -- ================== NOTIFICATION ==================
