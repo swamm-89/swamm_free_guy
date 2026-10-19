@@ -4,7 +4,7 @@ local HttpService = game:GetService("HttpService")
 local StarterGui = game:GetService("StarterGui")
 
 local MAIN_API_URL = "https://swamm-backend-verify.onrender.com"
-local FINAL_SCRIPT_URL = "https://gist.githubusercontent.com/swamm-89/f5c09eec6f05dd2b342ece2b7dfc2849/raw/9aa91504a41fdf63c5cf1ed97cb2a8f88f9a45a3/myscript-source-green.lua"  
+local FINAL_SCRIPT_URL = "https://gist.githubusercontent.com/swamm-89/f5c09eec6f05dd2b342ece2b7dfc2849/raw/212aa45c925eee52e5e6cdb08349822e875907a2/myscript-source-green.lua"  
 
 -- Rayfield UI
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
