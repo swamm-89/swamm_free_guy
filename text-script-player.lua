@@ -319,18 +319,6 @@ PlayerTab:CreateToggle({
     end
 })
 
-PlayerTab:CreateToggle({
-    Name = "Friend Protection",
-    CurrentValue = false,
-    Callback = function(Value)
-        friendProtection = Value
-        if hitboxEnabled then
-            updateFriendsCache()
-            flashAll() -- re-flash to show updated status
-        end
-    end
-})
-
 PlayerTab:CreateSlider({
     Name = "Hitbox Size",
     Range = {10, 500},
@@ -340,6 +328,18 @@ PlayerTab:CreateSlider({
         hitboxSize = v
         if hitboxEnabled then
             flashAll() -- size change = flash RED 5s with new size
+        end
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Friend Protection",
+    CurrentValue = true,
+    Callback = function(Value)
+        friendProtection = Value
+        if hitboxEnabled then
+            updateFriendsCache()
+            flashAll() -- re-flash to show updated status
         end
     end
 })
